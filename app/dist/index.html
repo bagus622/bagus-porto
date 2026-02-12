@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bagus Wisma Saputra - Portfolio</title>
+    <meta name="description" content="Personal Portfolio of Bagus Wisma Saputra - Creative Writer, Web Developer, UI/UX Designer">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        accent: {
+                            purple: '#8b5cf6',
+                            emerald: '#10b981',
+                            blue: '#3b82f6',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'typing': 'typing 3s steps(20) infinite',
+                        'blink': 'blink 0.7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        typing: {
+                            '0%': { width: '0' },
+                            '50%': { width: '100%' },
+                            '100%': { width: '0' },
+                        },
+                        blink: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(139, 92, 246, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.8), 0 0 40px rgba(139, 92, 246, 0.4)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Custom CSS - Mudah diedit */
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Glassmorphism effect untuk navbar */
+        .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Gradient background */
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+        }
+        
+        /* Accent gradient */
+        .accent-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #10b981 100%);
+        }
+        
+        /* Text gradient */
+        .text-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Underline animation untuk nav links */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Typing cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+            color: #3b82f6;
+        }
+        
+        /* Card hover effect */
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Skill progress bar */
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 4px;
+            transition: width 1.5s ease-out;
+        }
+        
+        /* Community card overlay */
+        .community-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .community-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .community-card:hover::before {
+            opacity: 1;
+        }
+        
+        .community-card .community-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .community-card:hover .community-info {
+            transform: translateY(0);
+        }
+        
+        /* Button hover animation */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Decorative shapes */
+        .shape-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+            border-radius: 4px;
+        }
+        
+        /* Form input styling */
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Project background transition */
+        #projects {
+            transition: background 0.8s ease;
+        }
+        
+        /* Horizontal Slider Styles */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .project-slider-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-slider-card.active .bg-slate-800\/80 {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Slider navigation buttons */
+        #slider-prev, #slider-next {
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        #projects:hover #slider-prev,
+        #projects:hover #slider-next {
+            opacity: 1;
+        }
+        
+        #slider-prev:hover, #slider-next:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* Slider dots */
+        .slider-dot {
+            transition: all 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background: #3b82f6;
+            width: 24px;
+        }
+        
+        /* Card glow effects on hover */
+        .project-slider-card .bg-slate-800\/80 {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Touch device optimizations */
+        @media (hover: none) {
+            #slider-prev, #slider-next {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white font-sans antialiased overflow-x-hidden">
+    
+    <!-- ============================================ -->
+    <!-- NAVBAR - Fixed top dengan glassmorphism    -->
+    <!-- ============================================ -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo / Nama -->
+                <a href="#home" class="text-xl md:text-2xl font-bold font-serif tracking-wide">
+                    <span class="text-gradient">Bagus Wisma Saputra</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors active">Home</a>
+                    <a href="#about" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a>
+                    <a href="#projects" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Project</a>
+                    <a href="#community" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Community</a>
+                    <a href="#contact" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Contact</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden glass border-t border-white/10">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#home" class="block py-2 text-gray-300 hover:text-white transition-colors">Home</a>
+                <a href="#about" class="block py-2 text-gray-300 hover:text-white transition-colors">About</a>
+                <a href="#projects" class="block py-2 text-gray-300 hover:text-white transition-colors">Project</a>
+                <a href="#community" class="block py-2 text-gray-300 hover:text-white transition-colors">Community</a>
+                <a href="#contact" class="block py-2 text-gray-300 hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- ============================================ -->
+    <!-- HERO SECTION - Split layout dengan typing  -->
+    <!-- ============================================ -->
+    <section id="home" class="min-h-screen flex items-center relative overflow-hidden gradient-bg">
+        <!-- Decorative blobs -->
+        <div class="shape-blob w-96 h-96 bg-blue-500 top-20 -left-48"></div>
+        <div class="shape-blob w-80 h-80 bg-purple-500 bottom-20 -right-40"></div>
+        <div class="shape-blob w-64 h-64 bg-emerald-500 top-1/2 left-1/3"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pt-32 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Text Content (Kiri) -->
+                <div class="order-2 md:order-1 text-center md:text-left">
+                    <p class="text-blue-400 font-medium mb-4 animate-fade-in" style="animation-delay: 0.2s;">Hello, I'm</p>
+                    
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold font-serif mb-6 animate-slide-up" style="animation-delay: 0.4s;">
+                        Bagus Wisma<br>
+                        <span class="text-gradient">Saputra</span>
+                    </h1>
+                    
+                    <!-- Typing Animation -->
+                    <div class="text-xl md:text-2xl text-gray-300 mb-8 h-8 animate-fade-in" style="animation-delay: 0.6s;">
+                        <span id="typing-text" class="typing-cursor"></span>
+                    </div>
+                    
+                    <p class="text-gray-400 mb-10 max-w-lg mx-auto md:mx-0 animate-fade-in" style="animation-delay: 0.8s;">
+                        Menciptakan pengalaman digital yang bermakna melalui desain, kode, dan cerita.
+                    </p>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-in" style="animation-delay: 1s;">
+                        <a href="#projects" class="btn-primary px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold text-white hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                            View My Work
+                        </a>
+                        <a href="#contact" class="px-8 py-4 border border-white/20 rounded-full font-semibold text-white hover:bg-white/10 transition-all">
+                            Get In Touch
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Photo (Kanan) -->
+                <div class="order-1 md:order-2 flex justify-center animate-fade-in" style="animation-delay: 0.5s;">
+                    <div class="relative">
+                        <!-- Glow effect behind photo -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 rounded-3xl blur-2xl opacity-30 animate-glow"></div>
+                        
+                        <!-- Photo container -->
+                        <div class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-2xl">
+                            <img src="images/hero-potrait.jpeg" alt="Bagus Wisma Saputra" class="w-full h-full object-cover">
+                        </div>
+                        
+                        <!-- Floating badge -->
+                        <div class="absolute -bottom-4 -right-4 bg-slate-800/90 backdrop-blur-sm px-6 py-3 rounded-2xl border border-white/10 shadow-xl animate-float">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+                                <span class="text-sm font-medium">Available for work</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-gray-400 hover:text-white transition-colors">
+                <i data-lucide="chevron-down" class="w-8 h-8"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!-- ABOUT ME SECTION - Storytelling personal   -->
+    <!-- ============================================ -->
+    <section id="about" class="py-24 md:py-32 relative overflow-hidden">
+        <div class="shape-blob w-96 h-96 bg-purple-500/20 top-0 right-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <!-- Visual (Kiri) -->
+                <div class="reveal">
+                    <div class="relative">
+                        <!-- Decorative shapes -->
+                        <div class="absolute -top-8 -left-8 w-32 h-32 border-2 border-blue-500/30 rounded-2xl"></div>
+                        <div class="absolute -bottom-8 -right-8 w-32 h-32 border-2 border-purple-500/30 rounded-full"></div>
+                        
+                        <!-- Abstract illustration area -->
+                        <div class="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 border border-white/10">
+                            <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-emerald-500/20 flex items-center justify-center">
+                                <div class="text-center">
+                                    <i data-lucide="sparkles" class="w-24 h-24 text-gradient mx-auto mb-4"></i>
+                                    <p class="text-gray-400 text-sm">Creative Mind</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content (Kanan) -->
+                <div class="reveal">
+                    <p class="text-blue-400 font-medium mb-4">Tentang Saya</p>
+                    <h2 class="text-3xl md:text-4xl font-bold font-serif mb-6">
+                        About <span class="text-gradient">Me</span>
+                    </h2>
+                    
+                    <div class="space-y-6 text-gray-300 leading-relaxed">
+                        <p class="text-lg">
+                            Saya adalah individu kreatif yang menikmati proses menciptakan cerita, desain, dan solusi digital. 
+                        </p>
+                        <p>
+                            Saya percaya bahwa karya yang baik lahir dari empati, konsistensi, dan keberanian bereksperimen. Setiap proyek adalah kesempatan untuk belajar dan tumbuh.
+                        </p>
+                        <p>
+                            Dengan pengalaman dalam menulis kreatif, pengembangan web, dan desain UI/UX, saya selalu berusaha menciptakan pengalaman yang tidak hanya fungsional, tetapi juga bermakna.
+                        </p>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6 mt-10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-gradient">3+</div>
+                            <div class="text-sm text-gray-400 mt-1">Years Exp.</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-gradient">10+</div>
+                            <div class="text-sm text-gray-400 mt-1">Projects</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-gradient">5+</div>
+                            <div class="text-sm text-gray-400 mt-1">Clients</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!-- EXPERTISE SECTION - Grid skills            -->
+    <!-- ============================================ -->
+    <section id="expertise" class="py-24 md:py-32 bg-slate-800/30 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16 reveal">
+                <p class="text-blue-400 font-medium mb-4">Keahlian</p>
+                <h2 class="text-3xl md:text-4xl font-bold font-serif">
+                    My <span class="text-gradient">Expertise</span>
+                </h2>
+            </div>
+            
+            <!-- Skills Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Skill 1: Writing -->
+                <div class="reveal bg-slate-800/50 rounded-2xl p-6 border border-white/5 hover:border-blue-500/30 transition-all hover:transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="pen-tool" class="w-7 h-7 text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Writing & Storytelling</h3>
+                    <p class="text-gray-400 text-sm mb-4">Menulis konten kreatif yang engaging dan bermakna.</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95"></div>
+                    </div>
+                    <span class="text-sm text-gray-400 mt-2 block">95%</span>
+                </div>
+                
+                <!-- Skill 2: Web Development -->
+                <div class="reveal bg-slate-800/50 rounded-2xl p-6 border border-white/5 hover:border-purple-500/30 transition-all hover:transform hover:-translate-y-2" style="transition-delay: 0.1s;">
+                    <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="code-2" class="w-7 h-7 text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Web Development</h3>
+                    <p class="text-gray-400 text-sm mb-4">Membangun website modern dengan teknologi terkini.</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75"></div>
+                    </div>
+                    <span class="text-sm text-gray-400 mt-2 block">75%</span>
+                </div>
+                
+                <!-- Skill 3: UI/UX Design -->
+                <div class="reveal bg-slate-800/50 rounded-2xl p-6 border border-white/5 hover:border-emerald-500/30 transition-all hover:transform hover:-translate-y-2" style="transition-delay: 0.2s;">
+                    <div class="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="palette" class="w-7 h-7 text-emerald-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">UI/UX Design</h3>
+                    <p class="text-gray-400 text-sm mb-4">Mendesain antarmuka yang intuitif dan menarik.</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90"></div>
+                    </div>
+                    <span class="text-sm text-gray-400 mt-2 block">90%</span>
+                </div>
+                
+                <!-- Skill 4: Creative Direction -->
+                <div class="reveal bg-slate-800/50 rounded-2xl p-6 border border-white/5 hover:border-pink-500/30 transition-all hover:transform hover:-translate-y-2" style="transition-delay: 0.3s;">
+                    <div class="w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="lightbulb" class="w-7 h-7 text-pink-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Creative Direction</h3>
+                    <p class="text-gray-400 text-sm mb-4">Memimpin visi kreatif untuk proyek-proyek besar.</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75"></div>
+                    </div>
+                    <span class="text-sm text-gray-400 mt-2 block">75%</span>
+                </div>
+                
+                <!-- Skill 5: Content Strategy -->
+                <div class="reveal bg-slate-800/50 rounded-2xl p-6 border border-white/5 hover:border-orange-500/30 transition-all hover:transform hover:-translate-y-2" style="transition-delay: 0.4s;">
+                    <div class="w-14 h-14 bg-orange-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="layout" class="w-7 h-7 text-orange-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Content Strategy</h3>
+                    <p class="text-gray-400 text-sm mb-4">Merencanakan strategi konten yang efektif.</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85"></div>
+                    </div>
+                    <span class="text-sm text-gray-400 mt-2 block">85%</span>
+                </div>
+                
+                <!-- Skill 6: Digital Marketing -->
+                <div class="reveal bg-slate-800/50 rounded-2xl p-6 border border-white/5 hover:border-cyan-500/30 transition-all hover:transform hover:-translate-y-2" style="transition-delay: 0.5s;">
+                    <div class="w-14 h-14 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="trending-up" class="w-7 h-7 text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Digital Marketing</h3>
+                    <p class="text-gray-400 text-sm mb-4">Mempromosikan brand di dunia digital.</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="70"></div>
+                    </div>
+                    <span class="text-sm text-gray-400 mt-2 block">70%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!-- PROJECTS SECTION - Horizontal Card Slider  -->
+    <!-- ============================================ -->
+    <section id="projects" class="py-24 md:py-32 relative overflow-hidden transition-all duration-700">
+        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center mb-12 reveal">
+                <p class="text-blue-400 font-medium mb-4">Portfolio</p>
+                <h2 class="text-3xl md:text-4xl font-bold font-serif">
+                    Featured <span class="text-gradient">Projects</span>
+                </h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                    Klik pada project untuk mengubah background section
+                </p>
+            </div>
+            
+            <!-- Horizontal Slider Container -->
+            <div class="relative">
+                <!-- Navigation Buttons -->
+                <button id="slider-prev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-slate-800/80 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/10 hover:bg-blue-500/20 hover:border-blue-500/50 transition-all -ml-4 md:ml-0">
+                    <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                </button>
+                <button id="slider-next" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-slate-800/80 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/10 hover:bg-blue-500/20 hover:border-blue-500/50 transition-all -mr-4 md:mr-0">
+                    <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                </button>
+                
+                <!-- Slider Track -->
+                <div id="projects-slider" class="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory py-8 px-4 md:px-16" style="scroll-behavior: smooth;">
+                    
+                    <!-- Project 1 -->
+                    <div class="project-slider-card flex-shrink-0 w-[320px] md:w-[380px] snap-center" data-bg="linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%)">
+                        <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-white/10 cursor-pointer h-full transition-all duration-500 hover:transform hover:-translate-y-4 hover:shadow-[0_0_40px_rgba(59,130,246,0.4)] hover:border-blue-500/50">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                                <img src="images/Web-Novel.jpeg" alt="NovelHub" class="w-full h-full object-cover relative z-10" onerror="this.style.display='none';this.parentElement.innerHTML='<i data-lucide=&quot;globe&quot; class=&quot;w-20 h-20 text-blue-400 relative z-10&quot;></i>';">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">NovelHub</h3>
+                                <p class="text-gray-400 text-sm mb-4">Platform untuk menulis dan mempublikasikan novel</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">Tailwind</span>
+                                    <span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs rounded-full">JavaScript</span>
+                                    <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full">HTML</span>
+                                </div>
+                                <a href="novel-web/index.html" target="_blank" class="mt-4 w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block text-center">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="project-slider-card flex-shrink-0 w-[320px] md:w-[380px] snap-center" data-bg="linear-gradient(135deg, #3f1e5f 0%, #0f172a 100%)">
+                        <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-white/10 cursor-pointer h-full transition-all duration-500 hover:transform hover:-translate-y-4 hover:shadow-[0_0_40px_rgba(139,92,246,0.4)] hover:border-purple-500/50">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                                 <img src="images/lapor-warga.png" alt="LaporWarga" class="w-full h-full object-cover relative z-10" onerror="this.style.display='none';this.parentElement.innerHTML='<i data-lucide=&quot;globe&quot; class=&quot;w-20 h-20 text-blue-400 relative z-10&quot;></i>';">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Lapor warga</h3>
+                                <p class="text-gray-400 text-sm mb-4">Platfrom untuk melaporkan kejadian yang ada di desa</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs rounded-full">Tailwind</span>
+                                    <span class="px-3 py-1 bg-pink-500/20 text-pink-400 text-xs rounded-full">Layanan</span>
+                                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">HTML</span>
+                                </div>
+                               <a href="lapor-warga/index.html" target="_blank" class="mt-4 w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block text-center">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3 -->
+                    <div class="project-slider-card flex-shrink-0 w-[320px] md:w-[380px] snap-center" data-bg="linear-gradient(135deg, #1e5f3f 0%, #0f172a 100%)">
+                        <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-white/10 cursor-pointer h-full transition-all duration-500 hover:transform hover:-translate-y-4 hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] hover:border-emerald-500/50">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-emerald-500/30 to-teal-500/30 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                                <img src="images/SCENA.jpeg" alt="Scena" class="w-full h-full object-cover relative z-10" onerror="this.style.display='none';this.parentElement.innerHTML='<i data-lucide=&quot;globe&quot; class=&quot;w-20 h-20 text-blue-400 relative z-10&quot;></i>';">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Scena</h3>
+                                <p class="text-gray-400 text-sm mb-4">Platform untuk nonton film</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full">Tailwind</span>
+                                    <span class="px-3 py-1 bg-teal-500/20 text-teal-400 text-xs rounded-full">Hiburan</span>
+                                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">HTML</span>
+                                </div>
+                               <a href="scena/index.html" target="_blank" class="mt-4 w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block text-center">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 4 -->
+                    <div class="project-slider-card flex-shrink-0 w-[320px] md:w-[380px] snap-center" data-bg="linear-gradient(135deg, #5f3f1e 0%, #0f172a 100%)">
+                        <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-white/10 cursor-pointer h-full transition-all duration-500 hover:transform hover:-translate-y-4 hover:shadow-[0_0_40px_rgba(249,115,22,0.4)] hover:border-orange-500/50">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-orange-500/30 to-amber-500/30 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                                <img src="images/Nexa.jpeg" alt="Nexa" class="w-full h-full object-cover relative z-10" onerror="this.style.display='none';this.parentElement.innerHTML='<i data-lucide=&quot;globe&quot; class=&quot;w-20 h-20 text-blue-400 relative z-10&quot;></i>';">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">NexaStore</h3>
+                                <p class="text-gray-400 text-sm mb-4">Platfrom untuk jual beli</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full">Branding</span>
+                                    <span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-xs rounded-full">tailwind</span>
+                                    <span class="px-3 py-1 bg-pink-500/20 text-pink-400 text-xs rounded-full">HTML</span>
+                                </div>
+                                <a href="ecommerce/index.html   " target="_blank" class="mt-4 w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block text-center">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 5 -->
+                    <div class="project-slider-card flex-shrink-0 w-[320px] md:w-[380px] snap-center" data-bg="linear-gradient(135deg, #1e5f5f 0%, #0f172a 100%)">
+                        <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-white/10 cursor-pointer h-full transition-all duration-500 hover:transform hover:-translate-y-4 hover:shadow-[0_0_40px_rgba(6,182,212,0.4)] hover:border-cyan-500/50">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-cyan-500/30 to-blue-500/30 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                                 <img src="images/sidesa.png" alt="Sidesa" class="w-full h-full object-cover relative z-10" onerror="this.style.display='none';this.parentElement.innerHTML='<i data-lucide=&quot;globe&quot; class=&quot;w-20 h-20 text-blue-400 relative z-10&quot;></i>';">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">SIDesa</h3>
+                                <p class="text-gray-400 text-sm mb-4">Desain APlikasi Desa</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs rounded-full">Figma</span>
+                                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">Desain</span>
+                                    <span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs rounded-full">Prototype</span>
+                                </div>
+                                 <a href="https://www.figma.com/proto/3GQ6jwStX8VWbgV3cdE7ca/SIDesa?node-id=4-148&p=f&t=lb7Sj6am5B5DfNB9-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=30%3A300" target="_blank" class="mt-4 w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block text-center">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 6 -->
+                    <div class="project-slider-card flex-shrink-0 w-[320px] md:w-[380px] snap-center" data-bg="linear-gradient(135deg, #5f1e3f 0%, #0f172a 100%)">
+                        <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-white/10 cursor-pointer h-full transition-all duration-500 hover:transform hover:-translate-y-4 hover:shadow-[0_0_40px_rgba(236,72,153,0.4)] hover:border-pink-500/50">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-pink-500/30 to-rose-500/30 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                               <img src="images/mindly.png" alt="Mindly" class="w-full h-full object-cover relative z-10" onerror="this.style.display='none';this.parentElement.innerHTML='<i data-lucide=&quot;globe&quot; class=&quot;w-20 h-20 text-blue-400 relative z-10&quot;></i>';">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Mindly</h3>
+                                <p class="text-gray-400 text-sm mb-4">Desain Kesehatan Pikiran dan mental</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-pink-500/20 text-pink-400 text-xs rounded-full">Kesehatan</span>
+                                    <span class="px-3 py-1 bg-rose-500/20 text-rose-400 text-xs rounded-full">FIgma</span>
+                                    <span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full">Prototype</span>
+                                </div>
+                              <a href="https://www.figma.com/proto/lwwRBkeLm3B51bs8QCeXWx/Mindly-APK-KESEHATAN?node-id=1-2&p=f&t=01I65DqXjPDYYZ9E-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2" target="_blank" class="mt-4 w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block text-center">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                      <!-- Project 7 -->
+                    <div class="project-slider-card flex-shrink-0 w-[320px] md:w-[380px] snap-center" data-bg="linear-gradient(135deg, #5f1e3f 0%, #0f172a 100%)">
+                        <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-white/10 cursor-pointer h-full transition-all duration-500 hover:transform hover:-translate-y-4 hover:shadow-[0_0_40px_rgba(236,72,153,0.4)] hover:border-pink-500/50">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-pink-500/30 to-rose-500/30 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                               <img src="images/remotefy.png" alt="Remotely" class="w-full h-full object-cover relative z-10" onerror="this.style.display='none';this.parentElement.innerHTML='<i data-lucide=&quot;globe&quot; class=&quot;w-20 h-20 text-blue-400 relative z-10&quot;></i>';">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Remotely</h3>
+                                <p class="text-gray-400 text-sm mb-4">Platfrom untuk remote jobs</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-pink-500/20 text-pink-400 text-xs rounded-full">Jobs</span>
+                                    <span class="px-3 py-1 bg-rose-500/20 text-rose-400 text-xs rounded-full">Tailwind</span>
+                                    <span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full">HTML</span>
+                                </div>
+                              <a href="remotely/index.html" target="_blank" class="mt-4 w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block text-center">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 8 -->
+                    <div class="project-slider-card flex-shrink-0 w-[320px] md:w-[380px] snap-center" data-bg="linear-gradient(135deg, #5f1e3f 0%, #0f172a 100%)">
+                        <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-white/10 cursor-pointer h-full transition-all duration-500 hover:transform hover:-translate-y-4 hover:shadow-[0_0_40px_rgba(236,72,153,0.4)] hover:border-pink-500/50">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-pink-500/30 to-rose-500/30 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                               <img src="images/Chess.png" alt="Chessnova" class="w-full h-full object-cover relative z-10" onerror="this.style.display='none';this.parentElement.innerHTML='<i data-lucide=&quot;globe&quot; class=&quot;w-20 h-20 text-blue-400 relative z-10&quot;></i>';">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">ChessNova</h3>
+                                <p class="text-gray-400 text-sm mb-4">Platfrom untuk bermain dan belajar catur</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-pink-500/20 text-pink-400 text-xs rounded-full">Chess</span>
+                                    <span class="px-3 py-1 bg-rose-500/20 text-rose-400 text-xs rounded-full">Education</span>
+                                    <span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full">HTML</span>
+                                </div>
+                              <a href="chessnova/index.html" target="_blank" class="mt-4 w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block text-center">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slider Indicators -->
+                <div class="flex justify-center gap-2 mt-6">
+                    <button class="slider-dot w-3 h-3 rounded-full bg-blue-500 transition-all" data-index="0"></button>
+                    <button class="slider-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="1"></button>
+                    <button class="slider-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="2"></button>
+                    <button class="slider-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="3"></button>
+                    <button class="slider-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="4"></button>
+                    <button class="slider-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="5"></button>
+                    <button class="slider-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="6"></button>
+                    <button class="slider-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="7"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!-- COMMUNITY SECTION - Grid foto              -->
+    <!-- ============================================ -->
+    <section id="community" class="py-24 md:py-32 bg-slate-800/30 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16 reveal">
+                <p class="text-blue-400 font-medium mb-4">Komunitas</p>
+                <h2 class="text-3xl md:text-4xl font-bold font-serif">
+                    My <span class="text-gradient">Community</span>
+                </h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                    "Bersama kita tumbuh, bersama kita berkarya. Kebersamaan adalah fondasi dari setiap pencapaian besar."
+                </p>
+            </div>
+            
+            <!-- Community Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Community 1 -->
+                <div class="community-card reveal rounded-2xl overflow-hidden aspect-[4/5] cursor-pointer">
+                    <img src="images/community3.jpg" alt="Community 1" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="community-info">
+                        <h3 class="text-xl font-semibold mb-1">Forum Genre</h3>
+                        <p class="text-gray-300 text-sm">Forum Genre Banjarnegara Indonesia</p>
+                    </div>
+                </div>
+                
+                <!-- Community 2 -->
+                <div class="community-card reveal rounded-2xl overflow-hidden aspect-[4/5] cursor-pointer" style="transition-delay: 0.1s;">
+                    <img src="images/community1.jpg" alt="Community 2" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="community-info">
+                        <h3 class="text-xl font-semibold mb-1">PSPG</h3>
+                        <p class="text-gray-300 text-sm">Perhimpunan Siswa</p>
+                    </div>
+                </div>
+                
+                <!-- Community 3 -->
+                <div class="community-card reveal rounded-2xl overflow-hidden aspect-[4/5] cursor-pointer" style="transition-delay: 0.2s;">
+                    <img src="images/community2.jpg" alt="Community 3" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    <div class="community-info">
+                        <h3 class="text-xl font-semibold mb-1">PIK Remaja</h3>
+                        <p class="text-gray-300 text-sm">Pusat Informasi dan Konseling Remaja</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Collaboration CTA -->
+            <div class="mt-16 text-center reveal">
+                <p class="text-gray-400 mb-6">Tertarik untuk berkolaborasi?</p>
+                <a href="#contact" class="btn-primary inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold text-white hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                    <i data-lucide="handshake" class="w-5 h-5"></i>
+                    Let's Collaborate
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!-- CONTACT SECTION - Split layout             -->
+    <!-- ============================================ -->
+    <section id="contact" class="py-24 md:py-32 relative overflow-hidden">
+        <div class="shape-blob w-96 h-96 bg-blue-500/20 bottom-0 left-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- Left: Info -->
+                <div class="reveal">
+                    <p class="text-blue-400 font-medium mb-4">Kontak</p>
+                    <h2 class="text-3xl md:text-4xl font-bold font-serif mb-6">
+                        Let's Create Something <span class="text-gradient">Meaningful</span>
+                    </h2>
+                    <p class="text-gray-400 mb-10">
+                        Punya ide menarik? Mari kita diskusikan dan wujudkan bersama. Saya selalu terbuka untuk kolaborasi dan proyek baru.
+                    </p>
+                    
+                    <!-- Contact Info -->
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                                <i data-lucide="mail" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400">Email</p>
+                                <p class="font-medium">baguswismasaputra@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-purple-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400">Location</p>
+                                <p class="font-medium">Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div>
+                        <p class="text-sm text-gray-400 mb-4">Follow me</p>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-blue-500/20 hover:text-blue-400 transition-all">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-purple-500/20 hover:text-purple-400 transition-all">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-pink-500/20 hover:text-pink-400 transition-all">
+                                <i data-lucide="instagram" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-blue-500/20 hover:text-blue-400 transition-all">
+                                <i data-lucide="twitter" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Form -->
+                <div class="reveal">
+                    <form id="contact-form" class="bg-slate-800/50 rounded-3xl p-8 border border-white/10">
+                        <div class="space-y-6">
+                            <!-- Name -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Name</label>
+                                <input type="text" name="name" placeholder="Your name" required
+                                    class="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
+                            </div>
+                            
+                            <!-- Email -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" name="email" placeholder="your@email.com" required
+                                    class="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-500">
+                            </div>
+                            
+                            <!-- Message -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Message</label>
+                                <textarea name="message" rows="5" placeholder="Tell me about your project..." required
+                                    class="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-500 resize-none"></textarea>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn-primary w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-purple-500/30 transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!-- FOOTER                                     -->
+    <!-- ============================================ -->
+    <footer class="py-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2024 Bagus Wisma Saputra. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm">
+                    Made with <i data-lucide="heart" class="w-4 h-4 inline text-red-500"></i> in Indonesia
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT - Interaksi dan Animasi         -->
+    <!-- ============================================ -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // ==========================================
+        // TYPING ANIMATION
+        // ==========================================
+        const roles = ['Creative Writer', 'Web Developer', 'UI/UX Designer', 'Digital Creator'];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById('typing-text');
+        
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            let typeSpeed = isDeleting ? 50 : 100;
+            
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeSpeed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeSpeed = 500; // Pause before typing
+            }
+            
+            setTimeout(typeEffect, typeSpeed);
+        }
+        
+        // Start typing animation
+        typeEffect();
+        
+        // ==========================================
+        // NAVBAR SCROLL EFFECT
+        // ==========================================
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass');
+            } else {
+                navbar.classList.remove('glass');
+            }
+        });
+        
+        // ==========================================
+        // MOBILE MENU TOGGLE
+        // ==========================================
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // ==========================================
+        // SCROLL REVEAL ANIMATION
+        // ==========================================
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+        
+        // ==========================================
+        // SKILL BAR ANIMATION
+        // ==========================================
+        const skillBars = document.querySelectorAll('.skill-progress');
+        
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.getAttribute('data-width');
+                    entry.target.style.width = width + '%';
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        skillBars.forEach(bar => skillObserver.observe(bar));
+        
+        // ==========================================
+        // PROJECTS HORIZONTAL SLIDER
+        // ==========================================
+        const slider = document.getElementById('projects-slider');
+        const sliderCards = document.querySelectorAll('.project-slider-card');
+        const sliderDots = document.querySelectorAll('.slider-dot');
+        const prevBtn = document.getElementById('slider-prev');
+        const nextBtn = document.getElementById('slider-next');
+        const projectsSection = document.getElementById('projects');
+        let currentSlide = 0;
+        
+        // Function to update active states
+        function updateSliderState(index) {
+            // Update dots
+            sliderDots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                    dot.classList.remove('bg-white/30');
+                    dot.classList.add('bg-blue-500');
+                    dot.style.width = '24px';
+                } else {
+                    dot.classList.remove('active');
+                    dot.classList.remove('bg-blue-500');
+                    dot.classList.add('bg-white/30');
+                    dot.style.width = '12px';
+                }
+            });
+            
+            // Update cards active state
+            sliderCards.forEach((card, i) => {
+                if (i === index) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+            
+            // Change background
+            const bg = sliderCards[index].getAttribute('data-bg');
+            projectsSection.style.background = bg;
+        }
+        
+        // Scroll to specific slide
+        function scrollToSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= sliderCards.length) index = sliderCards.length - 1;
+            
+            currentSlide = index;
+            const card = sliderCards[index];
+            card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            updateSliderState(index);
+        }
+        
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            scrollToSlide(currentSlide - 1);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            scrollToSlide(currentSlide + 1);
+        });
+        
+        // Dot navigation
+        sliderDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                scrollToSlide(index);
+            });
+        });
+        
+        // Click on card to change background
+        sliderCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                scrollToSlide(index);
+            });
+        });
+        
+        // Update current slide on scroll
+        slider.addEventListener('scroll', () => {
+            const scrollLeft = slider.scrollLeft;
+            const cardWidth = sliderCards[0].offsetWidth + 24; // card width + gap
+            const newIndex = Math.round(scrollLeft / cardWidth);
+            
+            if (newIndex !== currentSlide && newIndex >= 0 && newIndex < sliderCards.length) {
+                currentSlide = newIndex;
+                updateSliderState(currentSlide);
+            }
+        });
+        
+        // Initialize first slide
+        updateSliderState(0);
+        
+        // Touch/drag scrolling with momentum
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+        
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+        
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+            // Snap to nearest card
+            const cardWidth = sliderCards[0].offsetWidth + 24;
+            const nearestIndex = Math.round(slider.scrollLeft / cardWidth);
+            scrollToSlide(nearestIndex);
+        });
+        
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+        
+        // Set initial cursor
+        slider.style.cursor = 'grab';
+        
+        // ==========================================
+        // ACTIVE NAV LINK ON SCROLL
+        // ==========================================
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // ==========================================
+        // CONTACT FORM HANDLING
+        // ==========================================
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            
+            // Show success message (you can customize this)
+            alert(`Terima kasih ${name}! Pesan Anda telah terkirim. Saya akan menghubungi Anda segera.`);
+            
+            // Reset form
+            contactForm.reset();
+        });
+        
+        // ==========================================
+        // SMOOTH SCROLL FOR ANCHOR LINKS
+        // ==========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

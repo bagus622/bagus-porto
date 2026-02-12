@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Produk - NexaStore</title>
+  <meta name="description" content="Detail produk lengkap dengan harga, deskripsi, dan review. Tambahkan ke keranjang sekarang.">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar"></header>
+  
+  <main class="product-detail-page">
+    <div class="container">
+      <div class="product-detail" id="product-detail">
+        <!-- Product detail will be rendered by JavaScript -->
+      </div>
+      
+      <!-- Related Products -->
+      <section class="section" style="padding-top: 0;">
+        <div class="section-header">
+          <h2 class="section-title">Produk <span>Terkait</span></h2>
+        </div>
+        <div class="product-grid" id="related-products">
+          <!-- Related products will be rendered by JavaScript -->
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="footer"></footer>
+  
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let currentProduct = null;
+    let currentQuantity = 1;
+    
+    // Render product detail
+    function renderProductDetail() {
+      const productId = getUrlParam('id');
+      
+      if (!productId) {
+        document.getElementById('product-detail').innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+            <h2>Produk tidak ditemukan</h2>
+            <a href="shop.html" class="btn btn-primary" style="margin-top: 20px;">Kembali ke Shop</a>
+          </div>
+        `;
+        return;
+      }
+      
+      currentProduct = getProductById(productId);
+      
+      if (!currentProduct) {
+        document.getElementById('product-detail').innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+            <h2>Produk tidak ditemukan</h2>
+            <a href="shop.html" class="btn btn-primary" style="margin-top: 20px;">Kembali ke Shop</a>
+          </div>
+        `;
+        return;
+      }
+      
+      // Update page title
+      document.title = `${currentProduct.name} - NexaStore`;
+      
+      const inWishlist = isInWishlist(currentProduct.id);
+      const discount = currentProduct.originalPrice ? 
+        Math.round(((currentProduct.originalPrice - currentProduct.price) / currentProduct.originalPrice) * 100) : 0;
+      
+      document.getElementById('product-detail').innerHTML = `
+        <div class="product-gallery">
+          <div class="main-image">
+            <img src="${currentProduct.image}" alt="${currentProduct.name}" id="main-image">
+          </div>
+          <div class="thumbnail-list">
+            ${currentProduct.gallery.map((img, index) => `
+              <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
+                <img src="${img}" alt="${currentProduct.name} - ${index + 1}">
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        
+        <div class="product-detail-info">
+          <p class="product-category">${currentProduct.category}</p>
+          <h1>${currentProduct.name}</h1>
+          
+          <div class="product-detail-meta">
+            <div class="product-rating">
+              <div class="stars">${renderStars(currentProduct.rating)}</div>
+              <span class="rating-count">${currentProduct.rating} (${currentProduct.reviewCount} ulasan)</span>
+            </div>
+            <div class="stock-status ${currentProduct.stock > 0 ? 'in-stock' : 'out-stock'}">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              ${currentProduct.stock > 0 ? `Stok tersedia (${currentProduct.stock})` : 'Stok habis'}
+            </div>
+          </div>
+          
+          <div class="product-price" style="margin-bottom: 24px;">
+            <span class="product-detail-price">${formatPrice(currentProduct.price)}</span>
+            ${currentProduct.originalPrice ? `
+              <span class="original-price" style="font-size: 18px;">${formatPrice(currentProduct.originalPrice)}</span>
+              <span class="badge badge-sale">-${discount}%</span>
+            ` : ''}
+          </div>
+          
+          <p class="product-description">${currentProduct.description}</p>
+          
+          <div class="quantity-selector">
+            <span class="quantity-label">Jumlah:</span>
+            <div class="quantity-control">
+              <button onclick="updateQuantity(-1)">-</button>
+              <input type="number" id="quantity-input" value="1" min="1" max="${currentProduct.stock}" readonly>
+              <button onclick="updateQuantity(1)">+</button>
+            </div>
+          </div>
+          
+          <div class="product-actions">
+            <button class="btn btn-primary btn-lg" onclick="addToCartWithQty()" ${currentProduct.stock === 0 ? 'disabled' : ''}>
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+              ${currentProduct.stock === 0 ? 'Stok Habis' : 'Tambah ke Keranjang'}
+            </button>
+            <button class="btn btn-outline btn-lg ${inWishlist ? 'active' : ''}" id="wishlist-btn" onclick="toggleWishlistForProduct()">
+              <svg width="20" height="20" fill="${inWishlist ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+              <span id="wishlist-text">${inWishlist ? 'Hapus dari Wishlist' : 'Tambah ke Wishlist'}</span>
+            </button>
+          </div>
+          
+          <!-- Product Info Tabs -->
+          <div style="margin-top: 40px; border-top: 1px solid var(--gray-light); padding-top: 24px;">
+            <div style="display: flex; gap: 32px; margin-bottom: 20px;">
+              <button class="tab-btn active" onclick="switchTab('desc')" style="font-weight: 600; padding-bottom: 8px; border-bottom: 2px solid var(--primary);">Deskripsi</button>
+              <button class="tab-btn" onclick="switchTab('info')" style="font-weight: 500; color: var(--gray); padding-bottom: 8px; border-bottom: 2px solid transparent;">Informasi</button>
+              <button class="tab-btn" onclick="switchTab('shipping')" style="font-weight: 500; color: var(--gray); padding-bottom: 8px; border-bottom: 2px solid transparent;">Pengiriman</button>
+            </div>
+            
+            <div id="tab-desc" class="tab-content">
+              <p style="color: var(--gray); line-height: 1.8;">${currentProduct.description}</p>
+              <ul style="margin-top: 16px; padding-left: 20px; color: var(--gray);">
+                <li style="margin-bottom: 8px;">Kualitas premium dengan garansi resmi</li>
+                <li style="margin-bottom: 8px;">Pengiriman cepat 1-3 hari kerja</li>
+                <li style="margin-bottom: 8px;">Bisa return dalam 7 hari</li>
+                <li>Support customer service 24/7</li>
+              </ul>
+            </div>
+            
+            <div id="tab-info" class="tab-content" style="display: none;">
+              <table style="width: 100%; font-size: 14px;">
+                <tr style="border-bottom: 1px solid var(--gray-light);">
+                  <td style="padding: 12px 0; color: var(--gray);">Kategori</td>
+                  <td style="padding: 12px 0; font-weight: 500;">${currentProduct.category}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--gray-light);">
+                  <td style="padding: 12px 0; color: var(--gray);">Stok</td>
+                  <td style="padding: 12px 0; font-weight: 500;">${currentProduct.stock} unit</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--gray-light);">
+                  <td style="padding: 12px 0; color: var(--gray);">Rating</td>
+                  <td style="padding: 12px 0; font-weight: 500;">${currentProduct.rating}/5.0</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; color: var(--gray);">Ulasan</td>
+                  <td style="padding: 12px 0; font-weight: 500;">${currentProduct.reviewCount} ulasan</td>
+                </tr>
+              </table>
+            </div>
+            
+            <div id="tab-shipping" class="tab-content" style="display: none;">
+              <p style="color: var(--gray); line-height: 1.8;">Kami mengirimkan pesanan Anda dengan berbagai pilihan pengiriman:</p>
+              <ul style="margin-top: 16px; padding-left: 20px; color: var(--gray);">
+                <li style="margin-bottom: 8px;"><strong>JNE Reguler:</strong> 2-4 hari kerja</li>
+                <li style="margin-bottom: 8px;"><strong>J&T Express:</strong> 2-3 hari kerja</li>
+                <li style="margin-bottom: 8px;"><strong>SiCepat:</strong> 1-2 hari kerja</li>
+                <li><strong>GrabExpress:</strong> Same day (khusus Jakarta)</li>
+              </ul>
+              <p style="margin-top: 16px; color: var(--gray);">Gratis ongkir untuk pembelian diatas Rp 500.000</p>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Render related products
+      const relatedProducts = products
+        .filter(p => p.category === currentProduct.category && p.id !== currentProduct.id)
+        .slice(0, 4);
+      renderProductGrid('related-products', relatedProducts);
+    }
+    
+    // Change main image
+    function changeImage(src, thumbnail) {
+      document.getElementById('main-image').src = src;
+      document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+      thumbnail.classList.add('active');
+    }
+    
+    // Update quantity
+    function updateQuantity(change) {
+      const input = document.getElementById('quantity-input');
+      let newQty = parseInt(input.value) + change;
+      
+      if (newQty < 1) newQty = 1;
+      if (newQty > currentProduct.stock) newQty = currentProduct.stock;
+      
+      input.value = newQty;
+      currentQuantity = newQty;
+    }
+    
+    // Add to cart with quantity
+    function addToCartWithQty() {
+      if (currentProduct && currentQuantity > 0) {
+        const success = addToCart(currentProduct.id, currentQuantity);
+        if (success) {
+          currentQuantity = 1;
+          document.getElementById('quantity-input').value = 1;
+        }
+      }
+    }
+    
+    // Toggle wishlist for this product
+    function toggleWishlistForProduct() {
+      if (!currentProduct) return;
+      
+      const isAdded = toggleWishlist(currentProduct.id);
+      const btn = document.getElementById('wishlist-btn');
+      const text = document.getElementById('wishlist-text');
+      const svg = btn.querySelector('svg');
+      
+      if (isAdded) {
+        btn.classList.add('active');
+        svg.setAttribute('fill', 'currentColor');
+        text.textContent = 'Hapus dari Wishlist';
+      } else {
+        btn.classList.remove('active');
+        svg.setAttribute('fill', 'none');
+        text.textContent = 'Tambah ke Wishlist';
+      }
+    }
+    
+    // Switch tab
+    function switchTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
+      });
+      
+      // Show selected tab
+      document.getElementById(`tab-${tabName}`).style.display = 'block';
+      
+      // Update button styles
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.style.borderBottom = '2px solid transparent';
+        btn.style.color = 'var(--gray)';
+        btn.style.fontWeight = '500';
+      });
+      
+      event.target.style.borderBottom = '2px solid var(--primary)';
+      event.target.style.color = 'var(--dark)';
+      event.target.style.fontWeight = '600';
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      renderProductDetail();
+    });
+  </script>
+</body>
+</html>

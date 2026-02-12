@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novel Detail - NovelHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">NovelHub</a>
+    
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="write.html">Write</a></li>
+      <li><a href="my-novel.html">My Novel</a></li>
+    </ul>
+    
+    <div class="nav-actions">
+      <button class="theme-toggle" title="Toggle Dark Mode">🌙</button>
+      <button class="mobile-menu-btn" title="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Novel Header -->
+    <section class="container">
+      <div class="novel-detail-header" id="novel-header">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+    </section>
+    
+    <!-- Chapters Section -->
+    <section class="section container">
+      <h2 class="section-title" style="margin-bottom: 1.5rem;">📖 Daftar Chapter</h2>
+      <div class="chapter-list" id="chapter-list">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    let currentNovel = null;
+    let novelId = null;
+    
+    // Get novel ID from URL
+    function getNovelId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+    
+    // Render novel detail
+    function renderNovelDetail() {
+      novelId = getNovelId();
+      
+      if (!novelId) {
+        window.location.href = 'explore.html';
+        return;
+      }
+      
+      currentNovel = getNovelById(novelId);
+      
+      if (!currentNovel) {
+        document.getElementById('novel-header').innerHTML = `
+          <div style="text-align: center; padding: 3rem; grid-column: 1/-1;">
+            <h2>Novel tidak ditemukan</h2>
+            <p style="color: var(--text-muted); margin-top: 1rem;">
+              <a href="explore.html" class="btn btn-primary" style="margin-top: 1rem;">Kembali ke Explore</a>
+            </p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Render header
+      const coverStyle = currentNovel.cover 
+        ? `background-image: url('${currentNovel.cover}')` 
+        : `background: ${generateRandomCover()}`;
+      
+      document.getElementById('novel-header').innerHTML = `
+        <div class="novel-detail-cover" style="${coverStyle}; background-size: cover; background-position: center;"></div>
+        <div class="novel-detail-info">
+          <h1>${escapeHtml(currentNovel.title)}</h1>
+          <div class="novel-detail-meta">
+            <span>✍️ ${escapeHtml(currentNovel.author)}</span>
+            <span>•</span>
+            <span>🏷️ ${escapeHtml(currentNovel.genre)}</span>
+            <span>•</span>
+            <span>📚 ${currentNovel.chapters.length} Chapter</span>
+          </div>
+          <p class="novel-detail-synopsis">${escapeHtml(currentNovel.synopsis)}</p>
+          <div class="novel-detail-actions">
+            ${currentNovel.chapters.length > 0 
+              ? `<a href="read.html?novel=${currentNovel.id}&chapter=${currentNovel.chapters[0].chapterId}" class="btn btn-primary">📖 Baca Chapter 1</a>` 
+              : ''
+            }
+            <a href="write.html?edit=${currentNovel.id}" class="btn btn-secondary">✏️ Tambah Chapter</a>
+          </div>
+        </div>
+      `;
+      
+      // Render chapter list
+      renderChapterList();
+    }
+    
+    // Render chapter list
+    function renderChapterList() {
+      const list = document.getElementById('chapter-list');
+      
+      if (currentNovel.chapters.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state" style="padding: 3rem;">
+            <div class="empty-state-icon">📝</div>
+            <h3>Belum ada chapter</h3>
+            <p>Novel ini belum memiliki chapter. Jadilah pembaca pertama!</p>
+          </div>
+        `;
+        return;
+      }
+      
+      list.innerHTML = currentNovel.chapters.map((chapter, index) => `
+        <div class="chapter-item" onclick="location.href='read.html?novel=${currentNovel.id}&chapter=${chapter.chapterId}'">
+          <span class="chapter-item-title">${index + 1}. ${escapeHtml(chapter.title)}</span>
+          <span class="chapter-item-date">${formatDate(chapter.createdAt)}</span>
+        </div>
+      `).join('');
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      renderNovelDetail();
+    });
+  </script>
+</body>
+</html>

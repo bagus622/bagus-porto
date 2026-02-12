@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzles - ChessNova</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="puzzle-page">
+    <!-- Particles Background -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">♔</span>
+                <span class="logo-text">ChessNova</span>
+            </a>
+            <div class="nav-links">
+                <a href="game.html" class="nav-link">Play</a>
+                <a href="puzzle.html" class="nav-link active">Puzzles</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="game.html" class="mobile-link">Play</a>
+        <a href="puzzle.html" class="mobile-link active">Puzzles</a>
+        <a href="profile.html" class="mobile-link">Profile</a>
+    </div>
+
+    <!-- Main Puzzle Container -->
+    <main class="puzzle-container">
+        <!-- Puzzle Header -->
+        <section class="puzzle-header">
+            <div class="puzzle-stats-bar">
+                <div class="puzzle-stat">
+                    <span class="puzzle-stat-icon">🧩</span>
+                    <div class="puzzle-stat-info">
+                        <span class="puzzle-stat-value" id="solvedCount">0</span>
+                        <span class="puzzle-stat-label">Solved</span>
+                    </div>
+                </div>
+                <div class="puzzle-stat">
+                    <span class="puzzle-stat-icon">🔥</span>
+                    <div class="puzzle-stat-info">
+                        <span class="puzzle-stat-value" id="streakCount">0</span>
+                        <span class="puzzle-stat-label">Streak</span>
+                    </div>
+                </div>
+                <div class="puzzle-stat">
+                    <span class="puzzle-stat-icon">⭐</span>
+                    <div class="puzzle-stat-info">
+                        <span class="puzzle-stat-value" id="ratingDisplay">0</span>
+                        <span class="puzzle-stat-label">Rating</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Puzzle Content -->
+        <div class="puzzle-content">
+            <!-- Left Panel: Puzzle Info -->
+            <aside class="puzzle-panel left-panel">
+                <div class="puzzle-info-card">
+                    <h2 class="puzzle-title" id="puzzleTitle">Puzzle #1</h2>
+                    <div class="puzzle-meta">
+                        <span class="puzzle-difficulty" id="puzzleDifficulty">Easy</span>
+                        <span class="puzzle-rating" id="puzzleRating">Rating: 1200</span>
+                    </div>
+                    <div class="puzzle-objective">
+                        <h3>🎯 Objective</h3>
+                        <p id="puzzleObjective">Find the checkmate in 1 move</p>
+                    </div>
+                    <div class="puzzle-hint">
+                        <button class="btn btn-outline btn-sm" id="hintBtn">
+                            💡 Get Hint
+                        </button>
+                        <p class="hint-text" id="hintText"></p>
+                    </div>
+                </div>
+
+                <div class="puzzle-progress">
+                    <h3>📊 Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">0/10 puzzles solved</p>
+                </div>
+            </aside>
+
+            <!-- Center: Puzzle Board -->
+            <div class="board-section">
+                <div class="board-container" id="boardContainer">
+                    <div class="board-coordinates files">
+                        <span>a</span><span>b</span><span>c</span><span>d</span>
+                        <span>e</span><span>f</span><span>g</span><span>h</span>
+                    </div>
+                    <div class="board-coordinates ranks">
+                        <span>8</span><span>7</span><span>6</span><span>5</span>
+                        <span>4</span><span>3</span><span>2</span><span>1</span>
+                    </div>
+                    <div class="chess-board" id="puzzleBoard">
+                        <!-- Board squares generated by JS -->
+                    </div>
+                    <div class="board-overlay" id="boardOverlay"></div>
+                    <!-- Success/Error Indicator -->
+                    <div class="puzzle-feedback" id="puzzleFeedback"></div>
+                </div>
+
+                <!-- Mobile Controls -->
+                <div class="mobile-controls">
+                    <button class="control-btn" id="mobileHint" title="Hint">💡</button>
+                    <button class="control-btn" id="mobileSkip" title="Skip">⏭️</button>
+                    <button class="control-btn" id="mobileReset" title="Reset">🔄</button>
+                </div>
+            </div>
+
+            <!-- Right Panel: Puzzle List & Controls -->
+            <aside class="puzzle-panel right-panel">
+                <div class="puzzle-list-section">
+                    <h3 class="panel-title">🧩 Puzzle List</h3>
+                    <div class="puzzle-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="mate1">Mate in 1</button>
+                        <button class="filter-btn" data-filter="mate2">Mate in 2</button>
+                        <button class="filter-btn" data-filter="tactical">Tactical</button>
+                    </div>
+                    <div class="puzzle-list" id="puzzleList">
+                        <!-- Puzzle items will be generated by JS -->
+                    </div>
+                </div>
+
+                <div class="puzzle-actions">
+                    <button class="btn btn-primary" id="nextPuzzleBtn">Next Puzzle →</button>
+                    <button class="btn btn-outline" id="skipPuzzleBtn">Skip Puzzle</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content modal-center">
+            <div class="success-animation">
+                <div class="success-icon">🎉</div>
+                <div class="confetti-burst"></div>
+            </div>
+            <h2>Correct!</h2>
+            <p id="successMessage">Excellent! You found the solution.</p>
+            <div class="success-stats">
+                <div class="success-stat">
+                    <span class="success-stat-label">Rating</span>
+                    <span class="success-stat-value" id="successRating">+15</span>
+                </div>
+                <div class="success-stat">
+                    <span class="success-stat-label">Streak</span>
+                    <span class="success-stat-value" id="successStreak">3</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary btn-glow" id="continueBtn">Continue →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Failure Modal -->
+    <div class="modal" id="failureModal">
+        <div class="modal-content modal-center">
+            <div class="failure-icon">❌</div>
+            <h2>Not Quite</h2>
+            <p id="failureMessage">That's not the correct solution.</p>
+            <div class="solution-preview" id="solutionPreview">
+                <h4>Correct Solution:</h4>
+                <p id="correctMove"></p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="tryAgainBtn">Try Again</button>
+                <button class="btn btn-primary" id="nextAfterFailBtn">Next Puzzle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Puzzle Complete Modal -->
+    <div class="modal" id="completeModal">
+        <div class="modal-content modal-center">
+            <div class="complete-icon">🏆</div>
+            <h2>Puzzle Set Complete!</h2>
+            <p>Congratulations! You've completed all puzzles in this set.</p>
+            <div class="complete-stats" id="completeStats">
+                <!-- Stats will be added here -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeCompleteModal()">Back to Menu</button>
+                <button class="btn btn-primary btn-glow" onclick="restartPuzzles()">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/puzzle.js"></script>
+</body>
+</html>

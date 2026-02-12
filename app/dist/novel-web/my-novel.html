@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Novel - NovelHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">NovelHub</a>
+    
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="write.html">Write</a></li>
+      <li><a href="my-novel.html" class="active">My Novel</a></li>
+    </ul>
+    
+    <div class="nav-actions">
+      <button class="theme-toggle" title="Toggle Dark Mode">🌙</button>
+      <button class="mobile-menu-btn" title="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section container">
+      <div class="section-header">
+        <h1 class="section-title">📚 Novel Saya</h1>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-sm btn-secondary" onclick="exportData()">📥 Export</button>
+          <label class="btn btn-sm btn-secondary" style="cursor: pointer;">
+            📤 Import
+            <input type="file" accept=".json" onchange="handleImport(event)" style="display: none;">
+          </label>
+          <a href="write.html" class="btn btn-sm btn-primary">+ Tulis Baru</a>
+        </div>
+      </div>
+      
+      <!-- Stats -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div style="background: var(--bg-card); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border-color); text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary);" id="stat-novels">0</div>
+          <div style="color: var(--text-muted);">Novel</div>
+        </div>
+        <div style="background: var(--bg-card); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border-color); text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary);" id="stat-chapters">0</div>
+          <div style="color: var(--text-muted);">Chapter</div>
+        </div>
+        <div style="background: var(--bg-card); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border-color); text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary);" id="stat-words">0</div>
+          <div style="color: var(--text-muted);">Kata</div>
+        </div>
+      </div>
+      
+      <!-- Novel List -->
+      <div id="my-novel-list">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+      
+      <!-- Empty State -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">📝</div>
+        <h3>Belum ada novel</h3>
+        <p>Mulai tulis novel pertamamu sekarang!</p>
+        <a href="write.html" class="btn btn-primary" style="margin-top: 1rem;">Mulai Menulis</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Edit Novel</h3>
+        <button class="modal-close" onclick="closeEditModal()">&times;</button>
+      </div>
+      <form onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label">Judul</label>
+          <input type="text" id="edit-title" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Genre</label>
+          <select id="edit-genre" class="form-select">
+            <option value="Fantasi">Fantasi</option>
+            <option value="Romansa">Romansa</option>
+            <option value="Misteri">Misteri</option>
+            <option value="Horor">Horor</option>
+            <option value="Aksi">Aksi</option>
+            <option value="Komedi">Komedi</option>
+            <option value="Drama">Drama</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sinopsis</label>
+          <textarea id="edit-synopsis" class="form-textarea" rows="4"></textarea>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="saveEdit()">Simpan Perubahan</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Chapter Modal -->
+  <div class="modal-overlay" id="chapter-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Tambah Chapter</h3>
+        <button class="modal-close" onclick="closeChapterModal()">&times;</button>
+      </div>
+      <form onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label">Judul Chapter</label>
+          <input type="text" id="new-chapter-title" class="form-input" placeholder="Contoh: Bab 2 - Pertemuan">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Isi Chapter</label>
+          <textarea id="new-chapter-content" class="form-textarea" rows="10" placeholder="Tulis isi chapter di sini..."></textarea>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="saveNewChapter()">Simpan Chapter</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    let editingNovelId = null;
+    let addingChapterNovelId = null;
+    
+    // Render my novels
+    function renderMyNovels() {
+      const novels = getNovels();
+      const container = document.getElementById('my-novel-list');
+      const emptyState = document.getElementById('empty-state');
+      
+      // Update stats
+      const totalChapters = novels.reduce((sum, n) => sum + n.chapters.length, 0);
+      const totalWords = novels.reduce((sum, n) => {
+        return sum + n.chapters.reduce((cSum, c) => cSum + (c.content ? c.content.split(/\s+/).length : 0), 0);
+      }, 0);
+      
+      document.getElementById('stat-novels').textContent = novels.length;
+      document.getElementById('stat-chapters').textContent = totalChapters;
+      document.getElementById('stat-words').textContent = totalWords.toLocaleString();
+      
+      if (novels.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+      
+      container.style.display = 'block';
+      emptyState.style.display = 'none';
+      
+      container.innerHTML = novels.map(novel => createMyNovelCard(novel)).join('');
+    }
+    
+    // Create my novel card
+    function createMyNovelCard(novel) {
+      const coverStyle = novel.cover 
+        ? `background-image: url('${novel.cover}')` 
+        : `background: ${generateRandomCover()}`;
+      
+      return `
+        <div class="my-novel-card">
+          <div class="my-novel-card-cover" style="${coverStyle}; background-size: cover; background-position: center;"></div>
+          <div class="my-novel-card-info">
+            <h3 class="my-novel-card-title">${escapeHtml(novel.title)}</h3>
+            <p class="my-novel-card-meta">${escapeHtml(novel.genre)} • ${novel.chapters.length} Chapter</p>
+            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
+              ${escapeHtml(novel.synopsis.substring(0, 150))}${novel.synopsis.length > 150 ? '...' : ''}
+            </p>
+            <div class="my-novel-card-actions">
+              <a href="novel.html?id=${novel.id}" class="btn btn-sm btn-primary">👁️ Lihat</a>
+              <button class="btn btn-sm btn-secondary" onclick="openEditModal('${novel.id}')">✏️ Edit</button>
+              <button class="btn btn-sm btn-secondary" onclick="openChapterModal('${novel.id}')">➕ Chapter</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteNovelConfirm('${novel.id}')">🗑️ Hapus</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Open edit modal
+    function openEditModal(novelId) {
+      editingNovelId = novelId;
+      const novel = getNovelById(novelId);
+      
+      if (novel) {
+        document.getElementById('edit-title').value = novel.title;
+        document.getElementById('edit-genre').value = novel.genre;
+        document.getElementById('edit-synopsis').value = novel.synopsis;
+        document.getElementById('edit-modal').classList.add('active');
+      }
+    }
+    
+    // Close edit modal
+    function closeEditModal() {
+      document.getElementById('edit-modal').classList.remove('active');
+      editingNovelId = null;
+    }
+    
+    // Save edit
+    function saveEdit() {
+      if (!editingNovelId) return;
+      
+      const title = document.getElementById('edit-title').value.trim();
+      const genre = document.getElementById('edit-genre').value;
+      const synopsis = document.getElementById('edit-synopsis').value.trim();
+      
+      if (!title || !synopsis) {
+        showToast('Judul dan sinopsis wajib diisi!', 'error');
+        return;
+      }
+      
+      updateNovel(editingNovelId, { title, genre, synopsis });
+      showToast('Novel berhasil diupdate!');
+      closeEditModal();
+      renderMyNovels();
+    }
+    
+    // Open chapter modal
+    function openChapterModal(novelId) {
+      addingChapterNovelId = novelId;
+      document.getElementById('new-chapter-title').value = '';
+      document.getElementById('new-chapter-content').value = '';
+      document.getElementById('chapter-modal').classList.add('active');
+    }
+    
+    // Close chapter modal
+    function closeChapterModal() {
+      document.getElementById('chapter-modal').classList.remove('active');
+      addingChapterNovelId = null;
+    }
+    
+    // Save new chapter
+    function saveNewChapter() {
+      if (!addingChapterNovelId) return;
+      
+      const title = document.getElementById('new-chapter-title').value.trim();
+      const content = document.getElementById('new-chapter-content').value.trim();
+      
+      if (!title || !content) {
+        showToast('Judul dan isi chapter wajib diisi!', 'error');
+        return;
+      }
+      
+      addChapter(addingChapterNovelId, { title, content });
+      showToast('Chapter berhasil ditambahkan!');
+      closeChapterModal();
+      renderMyNovels();
+    }
+    
+    // Delete novel confirmation
+    function deleteNovelConfirm(novelId) {
+      if (confirm('Yakin ingin menghapus novel ini? Semua chapter juga akan dihapus.')) {
+        deleteNovel(novelId);
+        showToast('Novel berhasil dihapus!');
+        renderMyNovels();
+      }
+    }
+    
+    // Handle import
+    function handleImport(event) {
+      const file = event.target.files[0];
+      if (file) {
+        importData(file, function() {
+          renderMyNovels();
+        });
+      }
+    }
+    
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('active');
+        }
+      });
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      renderMyNovels();
+    });
+  </script>
+</body>
+</html>

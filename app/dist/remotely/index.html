@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remotely - Find Your Dream Remote Job</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 7h-9"></path>
+            <path d="M14 17H5"></path>
+            <circle cx="17" cy="17" r="3"></circle>
+            <circle cx="7" cy="7" r="3"></circle>
+          </svg>
+        </div>
+        Remotely
+      </a>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="jobs.html" class="nav-link">Jobs</a>
+        <a href="saved.html" class="nav-link">Saved</a>
+      </div>
+      
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+        <a href="jobs.html" class="btn btn-primary">Explore Jobs</a>
+      </div>
+      
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content animate-fade-in">
+        <div class="hero-badge animate-fade-in animate-delay-1">
+          <span class="badge-dot"></span>
+          <span>Over 1,000+ remote jobs available</span>
+        </div>
+        
+        <h1 class="hero-title animate-fade-in animate-delay-2">
+          Find Your <span class="text-gradient">Dream Remote</span> Job
+        </h1>
+        
+        <p class="hero-description animate-fade-in animate-delay-3">
+          Discover thousands of remote and hybrid opportunities from top companies worldwide. Your next career move starts here.
+        </p>
+        
+        <div class="hero-actions animate-fade-in animate-delay-4">
+          <a href="jobs.html" class="btn btn-primary btn-lg">
+            Explore Jobs
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#how-it-works" class="btn btn-secondary btn-lg">
+            Learn More
+          </a>
+        </div>
+        
+        <div class="hero-stats animate-fade-in animate-delay-4">
+          <div class="hero-stat">
+            <div class="hero-stat-value">12K+</div>
+            <div class="hero-stat-label">Active Jobs</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">500+</div>
+            <div class="hero-stat-label">Companies</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">50K+</div>
+            <div class="hero-stat-label">Job Seekers</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-illustration animate-fade-in animate-delay-3">
+        <svg viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background Elements -->
+          <circle cx="500" cy="100" r="80" fill="url(#grad1)" opacity="0.3"/>
+          <circle cx="100" cy="400" r="60" fill="url(#grad2)" opacity="0.3"/>
+          
+          <!-- Main Illustration - Remote Work Scene -->
+          <rect x="150" y="150" width="300" height="220" rx="20" fill="var(--glass-bg)" stroke="var(--glass-border)" stroke-width="2"/>
+          
+          <!-- Window -->
+          <rect x="170" y="170" width="120" height="80" rx="8" fill="#E0F2FE"/>
+          <circle cx="230" cy="210" r="20" fill="#FCD34D"/>
+          <path d="M170 230 L290 230" stroke="#BFDBFE" stroke-width="2"/>
+          <path d="M230 170 L230 250" stroke="#BFDBFE" stroke-width="2"/>
+          
+          <!-- Person -->
+          <circle cx="350" cy="200" r="25" fill="#FDBA74"/>
+          <path d="M325 235 Q350 225 375 235 L375 280 L325 280 Z" fill="#4F46E5"/>
+          
+          <!-- Desk -->
+          <rect x="180" y="280" width="240" height="10" rx="5" fill="#374151"/>
+          <rect x="200" y="290" width="15" height="60" fill="#6B7280"/>
+          <rect x="385" y="290" width="15" height="60" fill="#6B7280"/>
+          
+          <!-- Laptop -->
+          <rect x="280" y="250" width="80" height="50" rx="5" fill="#1F2937"/>
+          <rect x="285" y="255" width="70" height="40" rx="3" fill="#3B82F6"/>
+          <rect x="270" y="300" width="100" height="8" rx="4" fill="#374151"/>
+          
+          <!-- Coffee Cup -->
+          <rect x="210" y="265" width="20" height="25" rx="3" fill="#FEF3C7"/>
+          <path d="M230 272 Q238 272 238 280 Q238 288 230 288" stroke="#FEF3C7" stroke-width="3" fill="none"/>
+          <path d="M215 260 Q220 255 225 260" stroke="#9CA3AF" stroke-width="2" opacity="0.5"/>
+          
+          <!-- Plant -->
+          <rect x="400" y="260" width="25" height="30" rx="3" fill="#B45309"/>
+          <ellipse cx="412" cy="250" rx="15" ry="20" fill="#10B981"/>
+          <ellipse cx="400" cy="255" rx="10" ry="15" fill="#059669"/>
+          <ellipse cx="425" cy="255" rx="10" ry="15" fill="#059669"/>
+          
+          <!-- Floating Elements -->
+          <rect x="450" y="180" width="60" height="40" rx="10" fill="var(--glass-bg)" stroke="var(--glass-border)" stroke-width="1"/>
+          <text x="460" y="205" fill="var(--text-primary)" font-size="12" font-family="Inter">💼 Jobs</text>
+          
+          <rect x="80" y="200" width="70" height="40" rx="10" fill="var(--glass-bg)" stroke="var(--glass-border)" stroke-width="1"/>
+          <text x="90" y="225" fill="var(--text-primary)" font-size="12" font-family="Inter">🌍 Remote</text>
+          
+          <rect x="420" y="320" width="80" height="40" rx="10" fill="var(--glass-bg)" stroke="var(--glass-border)" stroke-width="1"/>
+          <text x="430" y="345" fill="var(--text-primary)" font-size="12" font-family="Inter">⚡ Fast Apply</text>
+          
+          <!-- Gradients -->
+          <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#EC4899;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 class="reveal">Why Choose Remotely?</h2>
+        <p class="text-secondary reveal">Discover the benefits of finding your next job with us</p>
+      </div>
+      
+      <div class="grid grid-3">
+        <div class="card reveal">
+          <div class="mb-md" style="width: 60px; height: 60px; background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+          </div>
+          <h3 class="mb-sm">Smart Search</h3>
+          <p class="text-secondary">Find jobs that match your skills and preferences with our intelligent search and filtering system.</p>
+        </div>
+        
+        <div class="card reveal">
+          <div class="mb-md" style="width: 60px; height: 60px; background: linear-gradient(135deg, #EC4899 0%, #F43F5E 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+          </div>
+          <h3 class="mb-sm">Save Favorites</h3>
+          <p class="text-secondary">Bookmark jobs you're interested in and come back to them anytime. Never lose track of opportunities.</p>
+        </div>
+        
+        <div class="card reveal">
+          <div class="mb-md" style="width: 60px; height: 60px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <h3 class="mb-sm">Verified Companies</h3>
+          <p class="text-secondary">All companies on our platform are verified. Apply with confidence knowing the opportunities are legitimate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Categories -->
+  <section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 class="reveal">Popular Categories</h2>
+        <p class="text-secondary reveal">Explore jobs by category</p>
+      </div>
+      
+      <div class="grid grid-4">
+        <a href="jobs.html" class="card reveal" style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">💻</div>
+          <h4>Development</h4>
+          <p class="text-secondary text-sm">2,450 jobs</p>
+        </a>
+        
+        <a href="jobs.html" class="card reveal" style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🎨</div>
+          <h4>Design</h4>
+          <p class="text-secondary text-sm">1,230 jobs</p>
+        </a>
+        
+        <a href="jobs.html" class="card reveal" style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+          <h4>Marketing</h4>
+          <p class="text-secondary text-sm">890 jobs</p>
+        </a>
+        
+        <a href="jobs.html" class="card reveal" style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+          <h4>Customer Success</h4>
+          <p class="text-secondary text-sm">567 jobs</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="card reveal" style="text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%); border: 1px solid rgba(79, 70, 229, 0.2);">
+        <h2 class="mb-md">Ready to Find Your Dream Job?</h2>
+        <p class="text-secondary mb-lg" style="max-width: 500px; margin-left: auto; margin-right: auto;">Join thousands of professionals who found their perfect remote position through Remotely.</p>
+        <a href="jobs.html" class="btn btn-primary btn-lg">
+          Get Started Now
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 7h-9"></path>
+                <path d="M14 17H5"></path>
+                <circle cx="17" cy="17" r="3"></circle>
+                <circle cx="7" cy="7" r="3"></circle>
+              </svg>
+            </div>
+            Remotely
+          </a>
+          <p>Find your dream remote job from anywhere in the world. Connecting talent with opportunity.</p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="jobs.html">Browse Jobs</a></li>
+            <li><a href="saved.html">Saved Jobs</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Companies</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Blog</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Career Tips</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Help Center</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">About Us</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Contact</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 Remotely. All rights reserved. Built with 💜 for remote workers worldwide.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+</html>

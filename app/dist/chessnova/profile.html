@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - ChessNova</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="profile-page">
+    <!-- Particles Background -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">♔</span>
+                <span class="logo-text">ChessNova</span>
+            </a>
+            <div class="nav-links">
+                <a href="game.html" class="nav-link">Play</a>
+                <a href="puzzle.html" class="nav-link">Puzzles</a>
+                <a href="profile.html" class="nav-link active">Profile</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="game.html" class="mobile-link">Play</a>
+        <a href="puzzle.html" class="mobile-link">Puzzles</a>
+        <a href="profile.html" class="mobile-link active">Profile</a>
+    </div>
+
+    <!-- Main Profile Container -->
+    <main class="profile-container">
+        <!-- Profile Header -->
+        <section class="profile-header">
+            <div class="profile-card">
+                <div class="profile-avatar-section">
+                    <div class="avatar-container">
+                        <div class="profile-avatar" id="profileAvatar">👤</div>
+                        <button class="avatar-edit" id="avatarEditBtn" title="Change Avatar">✏️</button>
+                    </div>
+                    <div class="profile-info">
+                        <h1 class="profile-name" id="profileName">Player</h1>
+                        <p class="profile-title" id="profileTitle">Chess Enthusiast</p>
+                        <div class="profile-badges">
+                            <span class="badge" id="memberBadge">🆕 New Member</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline btn-sm" id="editProfileBtn">✏️ Edit Profile</button>
+            </div>
+        </section>
+
+        <!-- Statistics Grid -->
+        <section class="stats-section">
+            <h2 class="section-title">📊 Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="totalWins">0</div>
+                    <div class="stat-label">Wins</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💔</div>
+                    <div class="stat-value" id="totalLosses">0</div>
+                    <div class="stat-label">Losses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🤝</div>
+                    <div class="stat-value" id="totalDraws">0</div>
+                    <div class="stat-label">Draws</div>
+                </div>
+                <div class="stat-card highlight">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value" id="winRate">0%</div>
+                    <div class="stat-label">Win Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-value" id="totalGames">0</div>
+                    <div class="stat-label">Total Games</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🧩</div>
+                    <div class="stat-value" id="puzzlesSolved">0</div>
+                    <div class="stat-label">Puzzles Solved</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rating Chart -->
+        <section class="rating-section">
+            <h2 class="section-title">📈 Rating Progress</h2>
+            <div class="rating-card">
+                <div class="rating-current">
+                    <div class="rating-value" id="currentRating">1500</div>
+                    <div class="rating-label">Current Rating</div>
+                </div>
+                <div class="rating-chart-container">
+                    <canvas id="ratingChart" class="rating-chart"></canvas>
+                </div>
+                <div class="rating-stats">
+                    <div class="rating-stat">
+                        <span class="rating-stat-label">Highest</span>
+                        <span class="rating-stat-value" id="highestRating">1500</span>
+                    </div>
+                    <div class="rating-stat">
+                        <span class="rating-stat-label">Lowest</span>
+                        <span class="rating-stat-value" id="lowestRating">1500</span>
+                    </div>
+                    <div class="rating-stat">
+                        <span class="rating-stat-label">Games</span>
+                        <span class="rating-stat-value" id="ratedGames">0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game History -->
+        <section class="history-section-profile">
+            <h2 class="section-title">🎮 Game History</h2>
+            <div class="history-card">
+                <div class="history-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="win">Wins</button>
+                    <button class="filter-btn" data-filter="loss">Losses</button>
+                    <button class="filter-btn" data-filter="draw">Draws</button>
+                </div>
+                <div class="history-table-container">
+                    <table class="history-table" id="gameHistoryTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Opponent</th>
+                                <th>Result</th>
+                                <th>Mode</th>
+                                <th>Moves</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gameHistoryBody">
+                            <!-- Games will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="history-empty" id="emptyHistory">
+                    <div class="empty-icon">🎮</div>
+                    <p>No games played yet</p>
+                    <a href="game.html" class="btn btn-primary">Play Your First Game</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements -->
+        <section class="achievements-section">
+            <h2 class="section-title">🏅 Achievements</h2>
+            <div class="achievements-grid" id="achievementsGrid">
+                <div class="achievement-card locked" data-achievement="first_win">
+                    <div class="achievement-icon">🥇</div>
+                    <h4>First Victory</h4>
+                    <p>Win your first game</p>
+                </div>
+                <div class="achievement-card locked" data-achievement="winning_streak">
+                    <div class="achievement-icon">🔥</div>
+                    <h4>On Fire</h4>
+                    <p>Win 5 games in a row</p>
+                </div>
+                <div class="achievement-card locked" data-achievement="puzzle_master">
+                    <div class="achievement-icon">🧩</div>
+                    <h4>Puzzle Master</h4>
+                    <p>Solve 10 puzzles</p>
+                </div>
+                <div class="achievement-card locked" data-achievement="speed_demon">
+                    <div class="achievement-icon">⚡</div>
+                    <h4>Speed Demon</h4>
+                    <p>Win a bullet game (1 min)</p>
+                </div>
+                <div class="achievement-card locked" data-achievement="grandmaster">
+                    <div class="achievement-icon">👑</div>
+                    <h4>Grandmaster</h4>
+                    <p>Reach 2000 rating</p>
+                </div>
+                <div class="achievement-card locked" data-achievement="veteran">
+                    <div class="achievement-icon">🎖️</div>
+                    <h4>Veteran</h4>
+                    <p>Play 50 games</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings -->
+        <section class="profile-settings">
+            <h2 class="section-title">⚙️ Profile Settings</h2>
+            <div class="settings-card">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Clear Game History</h4>
+                        <p>Delete all your game history data</p>
+                    </div>
+                    <button class="btn btn-danger btn-sm" id="clearHistoryBtn">Clear</button>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Reset Statistics</h4>
+                        <p>Reset all your statistics to zero</p>
+                    </div>
+                    <button class="btn btn-danger btn-sm" id="resetStatsBtn">Reset</button>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Export Data</h4>
+                        <p>Download all your data as JSON</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" id="exportDataBtn">Export</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeEditModal()">&times;</span>
+            <h2>✏️ Edit Profile</h2>
+            
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="editUsername" class="form-input" placeholder="Enter your username" maxlength="20">
+            </div>
+
+            <div class="form-group">
+                <label>Choose Avatar</label>
+                <div class="avatar-grid" id="avatarGrid">
+                    <button class="avatar-option" data-avatar="👤">👤</button>
+                    <button class="avatar-option" data-avatar="♔">♔</button>
+                    <button class="avatar-option" data-avatar="♕">♕</button>
+                    <button class="avatar-option" data-avatar="♖">♖</button>
+                    <button class="avatar-option" data-avatar="♗">♗</button>
+                    <button class="avatar-option" data-avatar="♘">♘</button>
+                    <button class="avatar-option" data-avatar="🦁">🦁</button>
+                    <button class="avatar-option" data-avatar="🦅">🦅</button>
+                    <button class="avatar-option" data-avatar="🐺">🐺</button>
+                    <button class="avatar-option" data-avatar="🦉">🦉</button>
+                    <button class="avatar-option" data-avatar="🦊">🦊</button>
+                    <button class="avatar-option" data-avatar="🐉">🐉</button>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+                <button class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Replay Modal -->
+    <div class="modal" id="replayModal">
+        <div class="modal-content modal-large">
+            <span class="modal-close" onclick="closeReplayModal()">&times;</span>
+            <h2>📊 Game Replay</h2>
+            <div class="replay-container">
+                <div class="replay-board" id="replayBoard"></div>
+                <div class="replay-controls">
+                    <button class="replay-btn" id="replayFirst">⏮️</button>
+                    <button class="replay-btn" id="replayPrev">◀️</button>
+                    <button class="replay-btn" id="replayPlay">▶️</button>
+                    <button class="replay-btn" id="replayNext">▶️▶️</button>
+                    <button class="replay-btn" id="replayLast">⏭️</button>
+                </div>
+                <div class="replay-info" id="replayInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="logo-icon">♔</span>
+                <span class="logo-text">ChessNova</span>
+            </div>
+            <div class="footer-links">
+                <a href="game.html">Play</a>
+                <a href="puzzle.html">Puzzles</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Made with ❤️ for chess lovers</p>
+        </div>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

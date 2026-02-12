@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Profile - Remotely</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 7h-9"></path>
+            <path d="M14 17H5"></path>
+            <circle cx="17" cy="17" r="3"></circle>
+            <circle cx="7" cy="7" r="3"></circle>
+          </svg>
+        </div>
+        Remotely
+      </a>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="jobs.html" class="nav-link">Jobs</a>
+        <a href="saved.html" class="nav-link">Saved</a>
+      </div>
+      
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+        <a href="saved.html" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          Saved
+        </a>
+      </div>
+      
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Company Header -->
+  <header class="company-header">
+    <div class="container">
+      <div class="company-header-content">
+        <!-- Content will be rendered by JavaScript -->
+        <div class="flex gap-xl items-center" style="justify-content: center;">
+          <div class="skeleton skeleton-circle" style="width: 120px; height: 120px;"></div>
+          <div style="flex: 1; max-width: 500px;">
+            <div class="skeleton skeleton-text" style="width: 70%; height: 2.5rem;"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text" style="width: 90%;"></div>
+            <div class="skeleton skeleton-text" style="width: 60%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Company About Section -->
+  <section class="company-about-section">
+    <div class="container">
+      <div class="company-about-content">
+        <!-- Main Content -->
+        <div class="job-detail-main" id="companyAbout">
+          <!-- Content will be rendered by JavaScript -->
+          <div class="skeleton skeleton-text" style="height: 2rem; width: 50%;"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text" style="width: 80%;"></div>
+          <div class="skeleton skeleton-text mt-lg" style="height: 2rem; width: 40%;"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text" style="width: 70%;"></div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="job-detail-sidebar">
+          <!-- Company Info Card -->
+          <div class="sidebar-card">
+            <h3>Company Info</h3>
+            <div id="companyDetails">
+              <!-- Content will be rendered by JavaScript -->
+              <div class="skeleton skeleton-text"></div>
+              <div class="skeleton skeleton-text" style="width: 80%;"></div>
+              <div class="skeleton skeleton-text mt-md"></div>
+              <div class="skeleton skeleton-text" style="width: 70%;"></div>
+            </div>
+          </div>
+          
+          <!-- Follow Card -->
+          <div class="sidebar-card">
+            <h3>Stay Updated</h3>
+            <p class="text-secondary text-sm mb-md">Get notified when new jobs are posted.</p>
+            <button class="btn btn-primary btn-full" onclick="showToast('You are now following this company!', 'success')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              Follow Company
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Company Jobs -->
+      <div class="mt-xl" id="companyJobs">
+        <!-- Content will be rendered by JavaScript -->
+        <div class="skeleton skeleton-text" style="height: 2rem; width: 40%;"></div>
+        <div class="jobs-grid mt-lg">
+          <div class="skeleton-card">
+            <div class="flex gap-md items-center mb-md">
+              <div class="skeleton skeleton-circle"></div>
+              <div style="flex: 1;">
+                <div class="skeleton skeleton-text" style="width: 70%;"></div>
+                <div class="skeleton skeleton-text" style="width: 50%;"></div>
+              </div>
+            </div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="flex gap-md items-center mb-md">
+              <div class="skeleton skeleton-circle"></div>
+              <div style="flex: 1;">
+                <div class="skeleton skeleton-text" style="width: 70%;"></div>
+                <div class="skeleton skeleton-text" style="width: 50%;"></div>
+              </div>
+            </div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 7h-9"></path>
+                <path d="M14 17H5"></path>
+                <circle cx="17" cy="17" r="3"></circle>
+                <circle cx="7" cy="7" r="3"></circle>
+              </svg>
+            </div>
+            Remotely
+          </a>
+          <p>Find your dream remote job from anywhere in the world. Connecting talent with opportunity.</p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="jobs.html">Browse Jobs</a></li>
+            <li><a href="saved.html">Saved Jobs</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Companies</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Blog</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Career Tips</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Help Center</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">About Us</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Contact</a></li>
+            <li><a href="#" onclick="showToast('Coming soon!', 'info')">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 Remotely. All rights reserved. Built with 💜 for remote workers worldwide.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+</html>

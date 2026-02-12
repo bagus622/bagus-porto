@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Write - NovelHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">NovelHub</a>
+    
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="write.html" class="active">Write</a></li>
+      <li><a href="my-novel.html">My Novel</a></li>
+    </ul>
+    
+    <div class="nav-actions">
+      <button class="theme-toggle" title="Toggle Dark Mode">🌙</button>
+      <button class="mobile-menu-btn" title="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section container">
+      <h1 class="section-title" style="margin-bottom: 1.5rem;">✍️ Tulis Novel Baru</h1>
+      
+      <form id="novel-form" onsubmit="return false;">
+        <!-- Cover Upload -->
+        <div class="form-group">
+          <label class="form-label">Cover Novel</label>
+          <div style="display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap;">
+            <div 
+              id="cover-preview" 
+              style="width: 150px; aspect-ratio: 2/3; background: var(--bg-input); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--text-muted); border: 2px dashed var(--border-color);"
+            >
+              <span>Preview</span>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+              <input 
+                type="file" 
+                id="cover-input" 
+                accept="image/*" 
+                class="form-input"
+                onchange="handleCoverChange(event)"
+              >
+              <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem;">
+                Upload gambar cover (opsional). Maksimal 2MB.
+              </p>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="useRandomCover()" style="margin-top: 0.5rem;">
+                🎨 Gunakan Cover Random
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Title -->
+        <div class="form-group">
+          <label class="form-label">Judul Novel *</label>
+          <input 
+            type="text" 
+            id="title-input" 
+            class="form-input" 
+            placeholder="Masukkan judul novel..."
+            required
+          >
+        </div>
+        
+        <!-- Author & Genre -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nama Penulis *</label>
+            <input 
+              type="text" 
+              id="author-input" 
+              class="form-input" 
+              placeholder="Nama penulis..."
+              required
+            >
+          </div>
+          <div class="form-group">
+            <label class="form-label">Genre *</label>
+            <select id="genre-input" class="form-select" required>
+              <option value="">Pilih Genre</option>
+              <option value="Fantasi">Fantasi</option>
+              <option value="Romansa">Romansa</option>
+              <option value="Misteri">Misteri</option>
+              <option value="Horor">Horor</option>
+              <option value="Aksi">Aksi</option>
+              <option value="Komedi">Komedi</option>
+              <option value="Drama">Drama</option>
+              <option value="Sci-Fi">Sci-Fi</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Synopsis -->
+        <div class="form-group">
+          <label class="form-label">Sinopsis *</label>
+          <textarea 
+            id="synopsis-input" 
+            class="form-textarea" 
+            placeholder="Tulis sinopsis singkat tentang novelmu..."
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        
+        <!-- Chapter Section -->
+        <div class="form-group" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius); margin-top: 2rem;">
+          <h3 style="margin-bottom: 1rem;">📖 Chapter Pertama (Opsional)</h3>
+          
+          <div class="form-group">
+            <label class="form-label">Judul Chapter</label>
+            <input 
+              type="text" 
+              id="chapter-title-input" 
+              class="form-input" 
+              placeholder="Contoh: Bab 1 - Awal Mula"
+            >
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Isi Chapter</label>
+            <textarea 
+              id="chapter-content-input" 
+              class="form-textarea" 
+              placeholder="Tulis isi chapter di sini..."
+              rows="10"
+            ></textarea>
+          </div>
+        </div>
+        
+        <!-- Buttons -->
+        <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" onclick="publishNovel()">
+            🚀 Publish Novel
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="saveDraft()">
+            💾 Simpan Draft
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="clearForm()">
+            🗑️ Bersihkan
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    let coverData = null;
+    let isRandomCover = false;
+    
+    // Handle cover file change
+    function handleCoverChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        if (file.size > 2 * 1024 * 1024) {
+          showToast('Ukuran file terlalu besar! Maksimal 2MB', 'error');
+          return;
+        }
+        
+        handleCoverUpload(file, function(base64) {
+          coverData = base64;
+          isRandomCover = false;
+          updateCoverPreview();
+        });
+      }
+    }
+    
+    // Use random cover
+    function useRandomCover() {
+      coverData = null;
+      isRandomCover = true;
+      updateCoverPreview();
+      showToast('Cover random akan dibuat saat publish!');
+    }
+    
+    // Update cover preview
+    function updateCoverPreview() {
+      const preview = document.getElementById('cover-preview');
+      
+      if (coverData) {
+        preview.style.backgroundImage = `url('${coverData}')`;
+        preview.style.backgroundSize = 'cover';
+        preview.style.backgroundPosition = 'center';
+        preview.innerHTML = '';
+      } else if (isRandomCover) {
+        preview.style.background = generateRandomCover();
+        preview.innerHTML = '<span style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Random Cover</span>';
+      } else {
+        preview.style.background = 'var(--bg-input)';
+        preview.style.backgroundImage = 'none';
+        preview.innerHTML = '<span>Preview</span>';
+      }
+    }
+    
+    // Get form data
+    function getFormData() {
+      return {
+        title: document.getElementById('title-input').value.trim(),
+        author: document.getElementById('author-input').value.trim(),
+        genre: document.getElementById('genre-input').value,
+        synopsis: document.getElementById('synopsis-input').value.trim(),
+        cover: coverData,
+        chapterTitle: document.getElementById('chapter-title-input').value.trim(),
+        chapterContent: document.getElementById('chapter-content-input').value.trim()
+      };
+    }
+    
+    // Validate form
+    function validateForm(data) {
+      if (!data.title) {
+        showToast('Judul novel wajib diisi!', 'error');
+        return false;
+      }
+      if (!data.author) {
+        showToast('Nama penulis wajib diisi!', 'error');
+        return false;
+      }
+      if (!data.genre) {
+        showToast('Genre wajib dipilih!', 'error');
+        return false;
+      }
+      if (!data.synopsis) {
+        showToast('Sinopsis wajib diisi!', 'error');
+        return false;
+      }
+      return true;
+    }
+    
+    // Publish novel
+    function publishNovel() {
+      const data = getFormData();
+      
+      if (!validateForm(data)) return;
+      
+      // Save novel
+      const novel = saveNovel({
+        title: data.title,
+        author: data.author,
+        genre: data.genre,
+        synopsis: data.synopsis,
+        cover: data.cover
+      });
+      
+      // Add chapter if provided
+      if (data.chapterTitle && data.chapterContent) {
+        addChapter(novel.id, {
+          title: data.chapterTitle,
+          content: data.chapterContent
+        });
+      }
+      
+      showToast('Novel berhasil dipublish!');
+      
+      // Redirect to novel detail
+      setTimeout(() => {
+        window.location.href = `novel.html?id=${novel.id}`;
+      }, 1000);
+    }
+    
+    // Save draft (same as publish but show different message)
+    function saveDraft() {
+      const data = getFormData();
+      
+      if (!validateForm(data)) return;
+      
+      const novel = saveNovel({
+        title: data.title,
+        author: data.author,
+        genre: data.genre,
+        synopsis: data.synopsis,
+        cover: data.cover
+      });
+      
+      if (data.chapterTitle && data.chapterContent) {
+        addChapter(novel.id, {
+          title: data.chapterTitle,
+          content: data.chapterContent
+        });
+      }
+      
+      showToast('Draft berhasil disimpan!');
+    }
+    
+    // Clear form
+    function clearForm() {
+      if (confirm('Yakin ingin membersihkan semua data?')) {
+        document.getElementById('novel-form').reset();
+        coverData = null;
+        isRandomCover = false;
+        updateCoverPreview();
+      }
+    }
+    
+    // Auto save setiap 30 detik (opsional)
+    setInterval(function() {
+      const data = getFormData();
+      if (data.title) {
+        localStorage.setItem('novel-draft', JSON.stringify(data));
+      }
+    }, 30000);
+    
+    // Load draft saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+      const draft = localStorage.getItem('novel-draft');
+      if (draft) {
+        const data = JSON.parse(draft);
+        document.getElementById('title-input').value = data.title || '';
+        document.getElementById('author-input').value = data.author || '';
+        document.getElementById('genre-input').value = data.genre || '';
+        document.getElementById('synopsis-input').value = data.synopsis || '';
+        document.getElementById('chapter-title-input').value = data.chapterTitle || '';
+        document.getElementById('chapter-content-input').value = data.chapterContent || '';
+        
+        if (data.cover) {
+          coverData = data.cover;
+          updateCoverPreview();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

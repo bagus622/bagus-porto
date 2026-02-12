@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lapor Warga - Suarakan Keluhanmu</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bullhorn"></i>
+                <span>Lapor Warga</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Beranda</a>
+                <a href="laporan.html">Lihat Laporan</a>
+            </div>
+            <div class="nav-actions">
+                <button id="darkModeToggle" class="btn-icon" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="btn-mobile" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="active">Beranda</a>
+        <a href="laporan.html">Lihat Laporan</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Suarakan Keluhanmu, <span class="highlight">Bangun Lingkungan Bersama</span></h1>
+                <p>Laporkan masalah di sekitar Anda dengan cepat dan mudah. Bersama-sama kita bisa membuat lingkungan yang lebih baik.</p>
+                <div class="hero-buttons">
+                    <a href="laporan.html" class="btn btn-primary">
+                        <i class="fas fa-eye"></i> Lihat Laporan
+                    </a>
+                    <a href="#form-laporan" class="btn btn-secondary">
+                        <i class="fas fa-plus"></i> Buat Laporan
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalLaporan">0</span>
+                        <span class="stat-label">Total Laporan</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="laporanSelesai">0</span>
+                        <span class="stat-label">Selesai</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="laporanMenunggu">0</span>
+                        <span class="stat-label">Menunggu</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="illustration">
+                    <i class="fas fa-city"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section" id="form-laporan">
+        <div class="container">
+            <div class="section-header">
+                <h2>Buat Laporan Baru</h2>
+                <p>Isi form di bawah ini untuk melaporkan masalah di lingkungan Anda</p>
+            </div>
+            
+            <form id="formLaporan" class="report-form">
+                <div class="form-grid">
+                    <!-- Nama Pelapor -->
+                    <div class="form-group">
+                        <label for="nama">
+                            <i class="fas fa-user"></i> Nama Pelapor <span class="required">*</span>
+                        </label>
+                        <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" required>
+                    </div>
+
+                    <!-- Kategori -->
+                    <div class="form-group">
+                        <label for="kategori">
+                            <i class="fas fa-tag"></i> Kategori <span class="required">*</span>
+                        </label>
+                        <select id="kategori" name="kategori" required>
+                            <option value="">Pilih Kategori</option>
+                            <option value="Jalan Rusak">Jalan Rusak</option>
+                            <option value="Sampah">Sampah</option>
+                            <option value="Lampu Jalan">Lampu Jalan</option>
+                            <option value="Keamanan">Keamanan</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+
+                    <!-- Lokasi -->
+                    <div class="form-group full-width">
+                        <label for="lokasi">
+                            <i class="fas fa-map-marker-alt"></i> Lokasi <span class="required">*</span>
+                        </label>
+                        <input type="text" id="lokasi" name="lokasi" placeholder="Contoh: Jl. Merdeka No. 123, RT 01/RW 02" required>
+                    </div>
+
+                    <!-- Deskripsi -->
+                    <div class="form-group full-width">
+                        <label for="deskripsi">
+                            <i class="fas fa-align-left"></i> Deskripsi Masalah <span class="required">*</span>
+                        </label>
+                        <textarea id="deskripsi" name="deskripsi" rows="4" placeholder="Jelaskan detail masalah yang Anda temui..." required></textarea>
+                    </div>
+
+                    <!-- Upload Foto -->
+                    <div class="form-group full-width">
+                        <label for="foto">
+                            <i class="fas fa-camera"></i> Upload Foto (Opsional)
+                        </label>
+                        <div class="file-upload">
+                            <input type="file" id="foto" name="foto" accept="image/*">
+                            <div class="file-upload-preview" id="fotoPreview">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Klik atau drag foto ke sini</span>
+                                <small>Format: JPG, PNG (Maks. 2MB)</small>
+                            </div>
+                        </div>
+                        <div class="preview-image-container" id="previewContainer" style="display: none;">
+                            <img id="previewImage" src="" alt="Preview">
+                            <button type="button" class="btn-remove-image" id="removeImage">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-primary btn-large" onclick="kirimLaporan()">
+                        <i class="fas fa-paper-plane"></i> Kirim Laporan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Lapor Warga</span>
+                    </a>
+                    <p>Suarakan keluhanmu, bangun lingkungan bersama.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Beranda</a>
+                    <a href="laporan.html">Lihat Laporan</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lapor Warga. Dibuat untuk demo dan portofolio.</p>
+                <p class="disclaimer">
+                    <i class="fas fa-info-circle"></i>
+                    Data tersimpan di browser Anda. Data akan hilang jika cache dibersihkan.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Laporan berhasil dikirim!</span>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

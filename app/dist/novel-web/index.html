@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovelHub - Tulis Ceritamu, Biarkan Dunia Membacanya</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">NovelHub</a>
+    
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="write.html">Write</a></li>
+      <li><a href="my-novel.html">My Novel</a></li>
+    </ul>
+    
+    <div class="nav-actions">
+      <button class="theme-toggle" title="Toggle Dark Mode">🌙</button>
+      <button class="mobile-menu-btn" title="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Tulis ceritamu,<br><span>biarkan dunia membacanya</span></h1>
+      <p>Platform menulis novel gratis. Tanpa database, tanpa ribet. Cukup tulis, simpan, dan bagikan.</p>
+      <div class="hero-buttons">
+        <a href="write.html" class="btn btn-primary">✍️ Mulai Menulis</a>
+        <a href="explore.html" class="btn btn-secondary">📚 Jelajahi Cerita</a>
+      </div>
+    </section>
+
+    <!-- Popular Stories Section -->
+    <section class="section container">
+      <div class="section-header">
+        <h2 class="section-title">🔥 Popular Stories</h2>
+        <a href="explore.html" class="btn btn-sm btn-secondary">Lihat Semua</a>
+      </div>
+      <div class="card-grid" id="popular-stories">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- Latest Update Section -->
+    <section class="section container">
+      <div class="section-header">
+        <h2 class="section-title">🆕 Latest Update</h2>
+      </div>
+      <div class="card-grid" id="latest-stories">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- Genre Filter Section -->
+    <section class="section container">
+      <div class="section-header">
+        <h2 class="section-title">🏷️ Jelajahi Genre</h2>
+      </div>
+      <div class="genre-tags">
+        <button class="genre-tag active" onclick="filterByGenre('all')">Semua</button>
+        <button class="genre-tag" onclick="filterByGenre('Fantasi')">Fantasi</button>
+        <button class="genre-tag" onclick="filterByGenre('Romansa')">Romansa</button>
+        <button class="genre-tag" onclick="filterByGenre('Misteri')">Misteri</button>
+        <button class="genre-tag" onclick="filterByGenre('Horor')">Horor</button>
+        <button class="genre-tag" onclick="filterByGenre('Aksi')">Aksi</button>
+        <button class="genre-tag" onclick="filterByGenre('Komedi')">Komedi</button>
+        <button class="genre-tag" onclick="filterByGenre('Drama')">Drama</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: var(--bg-secondary); padding: 2rem; text-align: center; border-top: 1px solid var(--border-color);">
+    <p style="color: var(--text-muted);">© 2024 NovelHub - HTML Only, No Database Needed</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Render novel cards
+    function renderNovels() {
+      const novels = getNovels();
+      const popularContainer = document.getElementById('popular-stories');
+      const latestContainer = document.getElementById('latest-stories');
+      
+      if (novels.length === 0) {
+        popularContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Belum ada novel. Jadilah yang pertama menulis!</p>';
+        latestContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Belum ada novel terbaru.</p>';
+        return;
+      }
+      
+      // Render popular stories (random 4)
+      const shuffled = [...novels].sort(() => 0.5 - Math.random());
+      const popular = shuffled.slice(0, Math.min(4, shuffled.length));
+      popularContainer.innerHTML = popular.map(novel => createNovelCard(novel)).join('');
+      
+      // Render latest stories (sorted by date, max 4)
+      const sorted = [...novels].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const latest = sorted.slice(0, Math.min(4, sorted.length));
+      latestContainer.innerHTML = latest.map(novel => createNovelCard(novel)).join('');
+    }
+    
+    // Create novel card HTML
+    function createNovelCard(novel) {
+      const coverStyle = novel.cover 
+        ? `background-image: url('${novel.cover}')` 
+        : `background: ${generateRandomCover()}`;
+      
+      return `
+        <div class="novel-card" onclick="location.href='novel.html?id=${novel.id}'">
+          <div class="novel-card-cover" style="${coverStyle}; background-size: cover; background-position: center;"></div>
+          <div class="novel-card-content">
+            <h3 class="novel-card-title">${escapeHtml(novel.title)}</h3>
+            <p class="novel-card-author">${escapeHtml(novel.author)}</p>
+            <span class="novel-card-genre">${escapeHtml(novel.genre)}</span>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Filter by genre
+    function filterByGenre(genre) {
+      // Update active tag
+      document.querySelectorAll('.genre-tag').forEach(tag => {
+        tag.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Redirect to explore with genre filter
+      if (genre !== 'all') {
+        window.location.href = `explore.html?genre=${genre}`;
+      } else {
+        window.location.href = 'explore.html';
+      }
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      renderNovels();
+    });
+  </script>
+</body>
+</html>

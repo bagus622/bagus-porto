@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - NexaStore</title>
+  <meta name="description" content="Selesaikan pembelian Anda. Isi data pengiriman dan pilih metode pembayaran.">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar"></header>
+  
+  <main class="checkout-page">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Checkout <span>Pesanan</span></h2>
+      </div>
+      
+      <div class="checkout-container" id="checkout-container">
+        <!-- Checkout content will be rendered by JavaScript -->
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="footer"></footer>
+  
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Render checkout page
+    function renderCheckout() {
+      const cart = getCart();
+      const container = document.getElementById('checkout-container');
+      
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 60px; background: white; border-radius: 12px; box-shadow: var(--shadow);">
+            <svg width="80" height="80" fill="none" stroke="#cbd5e1" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom: 20px;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <h3>Keranjang Belanja Kosong</h3>
+            <p>Anda belum menambahkan produk ke keranjang</p>
+            <a href="shop.html" class="btn btn-primary" style="margin-top: 24px;">Mulai Belanja</a>
+          </div>
+        `;
+        return;
+      }
+      
+      const subtotal = getCartTotal();
+      const tax = subtotal * 0.11; // PPN 11%
+      const total = subtotal + tax;
+      
+      container.innerHTML = `
+        <form class="checkout-form" id="checkout-form" onsubmit="handleCheckout(event)">
+          <!-- Informasi Pengiriman -->
+          <div class="form-section">
+            <h3><span>1</span> Informasi Pengiriman</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fullname">Nama Lengkap *</label>
+                <input type="text" id="fullname" name="fullname" required placeholder="Masukkan nama lengkap">
+              </div>
+              <div class="form-group">
+                <label for="phone">Nomor HP *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="08xxxxxxxxxx">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required placeholder="email@example.com">
+            </div>
+            
+            <div class="form-group">
+              <label for="address">Alamat Lengkap *</label>
+              <textarea id="address" name="address" required placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan"></textarea>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">Kota/Kabupaten *</label>
+                <input type="text" id="city" name="city" required placeholder="Masukkan kota">
+              </div>
+              <div class="form-group">
+                <label for="postal">Kode Pos *</label>
+                <input type="text" id="postal" name="postal" required placeholder="12345">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="notes">Catatan Pengiriman (Opsional)</label>
+              <textarea id="notes" name="notes" placeholder="Instruksi khusus untuk kurir"></textarea>
+            </div>
+          </div>
+          
+          <!-- Metode Pembayaran -->
+          <div class="form-section">
+            <h3><span>2</span> Metode Pembayaran</h3>
+            
+            <div class="payment-methods">
+              <label class="payment-method selected">
+                <input type="radio" name="payment" value="transfer" checked onchange="selectPayment(this)">
+                <div class="payment-icon">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Transfer Bank</strong>
+                  <p style="font-size: 12px; color: var(--gray); margin-top: 4px;">BCA, Mandiri, BNI, BRI</p>
+                </div>
+              </label>
+              
+              <label class="payment-method">
+                <input type="radio" name="payment" value="cod" onchange="selectPayment(this)">
+                <div class="payment-icon">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>COD (Bayar di Tempat)</strong>
+                  <p style="font-size: 12px; color: var(--gray); margin-top: 4px;">Bayar saat barang sampai</p>
+                </div>
+              </label>
+              
+              <label class="payment-method">
+                <input type="radio" name="payment" value="ewallet" onchange="selectPayment(this)">
+                <div class="payment-icon">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>E-Wallet</strong>
+                  <p style="font-size: 12px; color: var(--gray); margin-top: 4px;">GoPay, OVO, DANA, LinkAja</p>
+                </div>
+              </label>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Place Order
+          </button>
+        </form>
+        
+        <!-- Order Summary -->
+        <div class="checkout-summary">
+          <h3>Ringkasan Pesanan</h3>
+          
+          <div class="checkout-items">
+            ${cart.map(item => `
+              <div class="checkout-item">
+                <img src="${item.image}" alt="${item.name}">
+                <div class="checkout-item-info">
+                  <h4>${item.name}</h4>
+                  <p>${item.qty} x ${formatPrice(item.price)}</p>
+                </div>
+                <span class="order-item-price">${formatPrice(item.price * item.qty)}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>${formatPrice(subtotal)}</span>
+          </div>
+          
+          <div class="summary-row">
+            <span>PPN (11%)</span>
+            <span>${formatPrice(tax)}</span>
+          </div>
+          
+          <div class="summary-row">
+            <span>Ongkir</span>
+            <span style="color: var(--success);">Gratis</span>
+          </div>
+          
+          <div class="summary-row total">
+            <span>Total</span>
+            <span>${formatPrice(total)}</span>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Select payment method
+    function selectPayment(radio) {
+      document.querySelectorAll('.payment-method').forEach(method => {
+        method.classList.remove('selected');
+      });
+      radio.closest('.payment-method').classList.add('selected');
+    }
+    
+    // Handle checkout form submission
+    function handleCheckout(event) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const formData = new FormData(form);
+      
+      const orderData = {
+        fullname: formData.get('fullname'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        address: formData.get('address'),
+        city: formData.get('city'),
+        postal: formData.get('postal'),
+        notes: formData.get('notes'),
+        payment: formData.get('payment')
+      };
+      
+      // Validate
+      if (!orderData.fullname || !orderData.phone || !orderData.email || !orderData.address || !orderData.city || !orderData.postal) {
+        showToast('Mohon lengkapi semua field yang wajib diisi', 'error');
+        return;
+      }
+      
+      // Place order
+      const success = placeOrder(orderData);
+      
+      if (success) {
+        // Redirect to orders page after short delay
+        setTimeout(() => {
+          window.location.href = 'orders.html';
+        }, 1500);
+      }
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      renderCheckout();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read - NovelHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="read-progress" id="read-progress" style="width: 0%;"></div>
+  
+  <!-- Read Header -->
+  <header class="read-header">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <a href="index.html" style="text-decoration: none; color: var(--text-primary); font-weight: 700;">NovelHub</a>
+      <span style="color: var(--border-color);">|</span>
+      <span id="novel-title" style="color: var(--text-secondary); font-size: 0.875rem;"></span>
+    </div>
+    
+    <div class="read-controls">
+      <button class="read-control-btn" onclick="decreaseFontSize()" title="Kecilkan teks">A-</button>
+      <button class="read-control-btn" onclick="increaseFontSize()" title="Besarkan teks">A+</button>
+      <button class="read-control-btn" onclick="toggleLineHeight()" title="Spasi baris">↕️</button>
+      <button class="read-control-btn" onclick="toggleTheme()" title="Dark/Light mode">🌓</button>
+    </div>
+  </header>
+
+  <main>
+    <article class="read-content">
+      <h1 class="read-title" id="chapter-title"></h1>
+      <div class="read-text" id="chapter-content">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+      
+      <!-- Navigation -->
+      <div class="read-nav" id="chapter-nav">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+    </article>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Reading settings
+    let fontSize = 18; // px
+    let lineHeight = 1.8;
+    let currentNovel = null;
+    let currentChapter = null;
+    let novelId = null;
+    let chapterId = null;
+    
+    // Get params from URL
+    function getParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        novelId: params.get('novel'),
+        chapterId: params.get('chapter')
+      };
+    }
+    
+    // Load reading settings
+    function loadReadingSettings() {
+      const savedFontSize = localStorage.getItem('read-font-size');
+      const savedLineHeight = localStorage.getItem('read-line-height');
+      
+      if (savedFontSize) fontSize = parseInt(savedFontSize);
+      if (savedLineHeight) lineHeight = parseFloat(savedLineHeight);
+      
+      applyReadingSettings();
+    }
+    
+    // Apply reading settings
+    function applyReadingSettings() {
+      document.documentElement.style.setProperty('--read-font-size', fontSize + 'px');
+      document.documentElement.style.setProperty('--read-line-height', lineHeight);
+    }
+    
+    // Save reading settings
+    function saveReadingSettings() {
+      localStorage.setItem('read-font-size', fontSize);
+      localStorage.setItem('read-line-height', lineHeight);
+    }
+    
+    // Increase font size
+    function increaseFontSize() {
+      if (fontSize < 32) {
+        fontSize += 2;
+        applyReadingSettings();
+        saveReadingSettings();
+      }
+    }
+    
+    // Decrease font size
+    function decreaseFontSize() {
+      if (fontSize > 12) {
+        fontSize -= 2;
+        applyReadingSettings();
+        saveReadingSettings();
+      }
+    }
+    
+    // Toggle line height
+    function toggleLineHeight() {
+      const heights = [1.5, 1.8, 2.0, 2.5];
+      const currentIndex = heights.indexOf(lineHeight);
+      lineHeight = heights[(currentIndex + 1) % heights.length];
+      applyReadingSettings();
+      saveReadingSettings();
+    }
+    
+    // Update progress bar
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      document.getElementById('read-progress').style.width = progress + '%';
+    }
+    
+    // Render chapter
+    function renderChapter() {
+      const params = getParams();
+      novelId = params.novelId;
+      chapterId = params.chapterId;
+      
+      if (!novelId || !chapterId) {
+        window.location.href = 'explore.html';
+        return;
+      }
+      
+      currentNovel = getNovelById(novelId);
+      
+      if (!currentNovel) {
+        document.getElementById('chapter-content').innerHTML = `
+          <div style="text-align: center; padding: 3rem;">
+            <h2>Novel tidak ditemukan</h2>
+            <a href="explore.html" class="btn btn-primary" style="margin-top: 1rem;">Kembali ke Explore</a>
+          </div>
+        `;
+        return;
+      }
+      
+      currentChapter = getChapterById(novelId, chapterId);
+      
+      if (!currentChapter) {
+        document.getElementById('chapter-content').innerHTML = `
+          <div style="text-align: center; padding: 3rem;">
+            <h2>Chapter tidak ditemukan</h2>
+            <a href="novel.html?id=${novelId}" class="btn btn-primary" style="margin-top: 1rem;">Kembali ke Novel</a>
+          </div>
+        `;
+        return;
+      }
+      
+      // Update title
+      document.title = `${currentChapter.title} - ${currentNovel.title}`;
+      document.getElementById('novel-title').textContent = currentNovel.title;
+      document.getElementById('chapter-title').textContent = currentChapter.title;
+      
+      // Render content with paragraph formatting
+      const paragraphs = currentChapter.content.split('\n\n').filter(p => p.trim());
+      document.getElementById('chapter-content').innerHTML = paragraphs
+        .map(p => `<p>${escapeHtml(p).replace(/\n/g, '<br>')}</p>`)
+        .join('');
+      
+      // Render navigation
+      renderNavigation();
+    }
+    
+    // Render navigation buttons
+    function renderNavigation() {
+      const chapters = currentNovel.chapters;
+      const currentIndex = chapters.findIndex(c => c.chapterId === chapterId);
+      
+      let navHtml = '';
+      
+      // Previous chapter
+      if (currentIndex > 0) {
+        const prevChapter = chapters[currentIndex - 1];
+        navHtml += `
+          <a href="read.html?novel=${novelId}&chapter=${prevChapter.chapterId}" class="btn btn-secondary">
+            ← ${escapeHtml(prevChapter.title)}
+          </a>
+        `;
+      } else {
+        navHtml += `<span></span>`;
+      }
+      
+      // Back to novel
+      navHtml += `
+        <a href="novel.html?id=${novelId}" class="btn btn-sm btn-secondary">
+          📖 Daftar Chapter
+        </a>
+      `;
+      
+      // Next chapter
+      if (currentIndex < chapters.length - 1) {
+        const nextChapter = chapters[currentIndex + 1];
+        navHtml += `
+          <a href="read.html?novel=${novelId}&chapter=${nextChapter.chapterId}" class="btn btn-primary">
+            ${escapeHtml(nextChapter.title)} →
+          </a>
+        `;
+      } else {
+        navHtml += `<span></span>`;
+      }
+      
+      document.getElementById('chapter-nav').innerHTML = navHtml;
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      loadReadingSettings();
+      renderChapter();
+      
+      // Update progress on scroll
+      window.addEventListener('scroll', updateProgress);
+    });
+  </script>
+</body>
+</html>
