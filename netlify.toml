@@ -1,7 +1,6 @@
 [build]
-  baseRelDir = false
+  command = "cd app && npm ci && npm run build"
   publish = "app/dist"
-  command = "echo 'Deploying existing dist folder'"
 
 [[redirects]]
   from = "/*"
