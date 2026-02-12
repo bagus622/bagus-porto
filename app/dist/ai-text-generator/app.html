@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Lexora AI</title>
+  <meta name="description" content="Generate amazing content with Lexora AI dashboard.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-layout" id="appLayout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="logo-icon" style="width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); display: flex; align-items: center; justify-content: center; color: white;">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <span class="sidebar-logo-text">Lexora AI</span>
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-item active" data-section="generate">
+          <i class="fas fa-magic"></i>
+          <span class="sidebar-nav-text">Generate Text</span>
+        </div>
+        <div class="sidebar-nav-item" data-section="templates">
+          <i class="fas fa-layer-group"></i>
+          <span class="sidebar-nav-text">Templates</span>
+        </div>
+        <div class="sidebar-nav-item" data-section="history">
+          <i class="fas fa-history"></i>
+          <span class="sidebar-nav-text">History</span>
+        </div>
+        <div class="sidebar-nav-item" data-section="settings">
+          <i class="fas fa-cog"></i>
+          <span class="sidebar-nav-text">Settings</span>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-nav-item" id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="sidebar-nav-text">Logout</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <button class="topbar-btn mobile-menu-btn" id="mobileMenuBtn" style="display: none;">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="topbar-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search templates, history...">
+        </div>
+        
+        <div class="topbar-actions">
+          <button class="topbar-btn" onclick="showToast('Notifications coming soon!', 'info')">
+            <i class="fas fa-bell"></i>
+            <span class="badge">3</span>
+          </button>
+          <button class="topbar-btn" onclick="App.toggleDarkMode()">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="user-menu">
+            <div class="user-avatar">U</div>
+            <div class="user-info">
+              <span class="user-name">User</span>
+              <span class="user-plan">Free Plan</span>
+            </div>
+            <i class="fas fa-chevron-down" style="font-size: 12px; color: var(--text-muted);"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+        <!-- Generate Page -->
+        <div class="page-content" id="generatePage">
+          <div class="page-header">
+            <h1 class="page-title" id="pageTitle">Generate Text</h1>
+            <p class="page-subtitle">Create amazing content with AI-powered generation</p>
+          </div>
+          
+          <div class="content-grid">
+            <!-- Generate Form -->
+            <div class="generate-card">
+              <form class="generate-form" id="generateForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>
+                      <i class="fas fa-palette"></i>
+                      Tone
+                    </label>
+                    <select class="form-select" id="tone">
+                      <option value="formal">Formal</option>
+                      <option value="casual" selected>Casual</option>
+                      <option value="persuasive">Persuasive</option>
+                      <option value="storytelling">Storytelling</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>
+                      <i class="fas fa-file-alt"></i>
+                      Content Type
+                    </label>
+                    <select class="form-select" id="contentType">
+                      <option value="blog">Blog Post</option>
+                      <option value="caption">Social Media Caption</option>
+                      <option value="script">Video Script</option>
+                      <option value="email">Email Marketing</option>
+                      <option value="product">Product Description</option>
+                      <option value="outline">Blog Outline</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label>
+                    <i class="fas fa-heading"></i>
+                    Topic
+                  </label>
+                  <input 
+                    type="text" 
+                    class="form-input" 
+                    id="topic" 
+                    placeholder="Enter your topic (e.g., 'digital marketing strategies')"
+                    required
+                  >
+                </div>
+                
+                <div class="form-group">
+                  <label>
+                    <i class="fas fa-tags"></i>
+                    Keywords (optional)
+                  </label>
+                  <input 
+                    type="text" 
+                    class="form-input" 
+                    id="keywords" 
+                    placeholder="Enter keywords separated by commas"
+                  >
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>
+                      <i class="fas fa-font"></i>
+                      Word Count
+                      <span class="slider-value" id="wordCountValue">300</span>
+                    </label>
+                    <input 
+                      type="range" 
+                      class="range-slider" 
+                      id="wordCount" 
+                      min="100" 
+                      max="1000" 
+                      value="300"
+                      step="50"
+                      data-value-display="wordCountValue"
+                    >
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>
+                      <i class="fas fa-globe"></i>
+                      Language
+                    </label>
+                    <select class="form-select" id="language">
+                      <option value="en">English</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                      <option value="de">German</option>
+                      <option value="id">Indonesian</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label>
+                    <i class="fas fa-lightbulb"></i>
+                    Creativity Level
+                    <span class="slider-value" id="creativityValue">70</span>
+                  </label>
+                  <input 
+                    type="range" 
+                    class="range-slider" 
+                    id="creativity" 
+                    min="0" 
+                    max="100" 
+                    value="70"
+                    data-value-display="creativityValue"
+                  >
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg w-full" id="generateBtn">
+                  <i class="fas fa-magic"></i>
+                  Generate
+                </button>
+              </form>
+            </div>
+            
+            <!-- Sidebar Panel -->
+            <div class="sidebar-panel">
+              <!-- Output Card -->
+              <div class="output-card">
+                <div class="output-header">
+                  <span class="output-title">
+                    <i class="fas fa-file-alt"></i>
+                    Generated Content
+                  </span>
+                  <div class="output-actions">
+                    <button class="output-action-btn copy" id="copyBtn" title="Copy to clipboard">
+                      <i class="fas fa-copy"></i>
+                      Copy
+                    </button>
+                    <button class="output-action-btn download" id="downloadBtn" title="Download as .txt">
+                      <i class="fas fa-download"></i>
+                      Download
+                    </button>
+                  </div>
+                </div>
+                <div class="output-content" id="outputContent">
+                  <div class="output-placeholder">
+                    <i class="fas fa-robot"></i>
+                    <p>Your generated content will appear here</p>
+                    <p style="font-size: 13px; margin-top: 8px;">Fill in the form and click Generate</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Quick Actions -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <span class="panel-title">
+                    <i class="fas fa-bolt"></i>
+                    Quick Actions
+                  </span>
+                </div>
+                <div class="panel-content">
+                  <div class="quick-actions">
+                    <button class="quick-action-btn" data-action="shorten">
+                      <i class="fas fa-compress"></i>
+                      Shorten
+                    </button>
+                    <button class="quick-action-btn" data-action="expand">
+                      <i class="fas fa-expand"></i>
+                      Expand
+                    </button>
+                    <button class="quick-action-btn" data-action="rewrite">
+                      <i class="fas fa-redo"></i>
+                      Rewrite
+                    </button>
+                    <button class="quick-action-btn" data-action="emotional">
+                      <i class="fas fa-heart"></i>
+                      Emotional
+                    </button>
+                    <button class="quick-action-btn" data-action="seo">
+                      <i class="fas fa-search"></i>
+                      SEO
+                    </button>
+                    <button class="quick-action-btn" id="regenerateBtn">
+                      <i class="fas fa-sync"></i>
+                      Regenerate
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Recent History -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <span class="panel-title">
+                    <i class="fas fa-history"></i>
+                    Recent History
+                  </span>
+                </div>
+                <div class="panel-content">
+                  <div class="history-list" id="historyList">
+                    <div class="history-empty">
+                      <i class="fas fa-history"></i>
+                      <p>No history yet</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Templates Page -->
+        <div class="page-content hidden" id="templatesPage">
+          <div class="page-header">
+            <h1 class="page-title">Templates</h1>
+            <p class="page-subtitle">Choose from our collection of pre-built templates</p>
+          </div>
+          
+          <div class="templates-grid" id="templatesGrid">
+            <!-- Templates will be loaded dynamically -->
+          </div>
+        </div>
+
+        <!-- History Page -->
+        <div class="page-content hidden" id="historyPage">
+          <div class="page-header">
+            <h1 class="page-title">History</h1>
+            <p class="page-subtitle">View and manage your generated content</p>
+          </div>
+          
+          <div class="history-page-grid">
+            <div class="history-list-card">
+              <div class="history-list-header">
+                <span class="history-list-title">All Generations</span>
+                <div class="history-list-actions">
+                  <div class="history-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search history...">
+                  </div>
+                  <button class="btn btn-sm btn-secondary" id="resetHistoryBtn">
+                    <i class="fas fa-trash"></i>
+                    Clear
+                  </button>
+                </div>
+              </div>
+              <div class="history-items" id="historyItems">
+                <!-- History items will be loaded dynamically -->
+              </div>
+            </div>
+            
+            <div class="history-detail-card">
+              <div class="history-detail-header">
+                <h3 class="history-detail-title">Content Preview</h3>
+                <p class="history-detail-date">Select an item to view</p>
+              </div>
+              <div class="history-detail-content">
+                <div class="output-placeholder">
+                  <i class="fas fa-file-alt"></i>
+                  <p>Select a history item to view details</p>
+                </div>
+              </div>
+              <div class="history-detail-actions">
+                <button class="btn btn-sm btn-secondary" disabled>
+                  <i class="fas fa-copy"></i>
+                  Copy
+                </button>
+                <button class="btn btn-sm btn-primary" disabled>
+                  <i class="fas fa-download"></i>
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div class="page-content hidden" id="settingsPage">
+          <div class="page-header">
+            <h1 class="page-title">Settings</h1>
+            <p class="page-subtitle">Manage your account and preferences</p>
+          </div>
+          
+          <div class="settings-grid">
+            <div class="settings-sidebar">
+              <div class="settings-nav-item active">
+                <i class="fas fa-user"></i>
+                Account
+              </div>
+              <div class="settings-nav-item">
+                <i class="fas fa-palette"></i>
+                Appearance
+              </div>
+              <div class="settings-nav-item">
+                <i class="fas fa-bell"></i>
+                Notifications
+              </div>
+              <div class="settings-nav-item">
+                <i class="fas fa-shield-alt"></i>
+                Privacy
+              </div>
+            </div>
+            
+            <div class="settings-content">
+              <!-- Account Settings -->
+              <div class="settings-section">
+                <h3 class="settings-section-title">Profile Information</h3>
+                <p class="settings-section-desc">Update your personal information</p>
+                
+                <form id="settingsForm">
+                  <div class="form-group">
+                    <label>Display Name</label>
+                    <input type="text" class="form-input" id="settingsName" placeholder="Your name">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" class="form-input" disabled placeholder="user@example.com">
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                      Email cannot be changed. Contact support for assistance.
+                    </p>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+                </form>
+              </div>
+              
+              <!-- Appearance Settings -->
+              <div class="settings-section">
+                <h3 class="settings-section-title">Appearance</h3>
+                <p class="settings-section-desc">Customize how Lexora looks for you</p>
+                
+                <div class="toggle-switch">
+                  <div class="toggle-info">
+                    <span class="toggle-label">Dark Mode</span>
+                    <span class="toggle-desc">Switch between light and dark themes</span>
+                  </div>
+                  <label class="toggle-input">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Data Settings -->
+              <div class="settings-section">
+                <h3 class="settings-section-title">Data Management</h3>
+                <p class="settings-section-desc">Manage your data and history</p>
+                
+                <div class="toggle-switch">
+                  <div class="toggle-info">
+                    <span class="toggle-label">Auto-save History</span>
+                    <span class="toggle-desc">Automatically save all generated content</span>
+                  </div>
+                  <label class="toggle-input">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                
+                <button class="btn btn-secondary mt-4" id="resetHistoryBtn">
+                  <i class="fas fa-trash"></i>
+                  Clear All History
+                </button>
+              </div>
+              
+              <!-- Danger Zone -->
+              <div class="settings-section">
+                <div class="danger-zone">
+                  <h4 class="danger-zone-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Danger Zone
+                  </h4>
+                  <p class="danger-zone-desc">
+                    Once you delete your account, there is no going back. Please be certain.
+                  </p>
+                  <button class="btn-danger" id="deleteAccountBtn">
+                    <i class="fas fa-trash"></i>
+                    Delete Account
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Delete Account Modal -->
+  <div class="modal-overlay" id="deleteAccountModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Delete Account</h3>
+        <p class="modal-desc">Are you sure you want to delete your account? This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-cancel">Cancel</button>
+        <button class="btn btn-danger" id="confirmDeleteAccount">
+          <i class="fas fa-trash"></i>
+          Delete Account
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
