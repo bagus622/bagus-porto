@@ -1,4 +1,5 @@
 [build]
+  baseRelDir = false
   publish = "app/dist"
   command = "echo 'Deploying existing dist folder'"
 
