@@ -1,7 +1,6 @@
 [build]
-  base = "app"
-  publish = "dist"
-  command = "npm ci && npm run build"
+  publish = "app/dist"
+  command = "echo 'Deploying existing dist folder'"
 
 [[redirects]]
   from = "/*"
